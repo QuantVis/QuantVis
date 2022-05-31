@@ -1,0 +1,183 @@
+/* 사이드바 레퍼런스 : https://blog.naver.com/maestrois/222188488158 */
+/* GOOGLE FONTS */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code&family=IBM+Plex+Sans+KR:wght@300&display=swap');
+
+/* VARIABLES CSS */
+:root {
+    --nav--width: (90px + 9.25rem);;
+
+    /* Colores */
+    --first-color: #04C5C2;
+    --nav-color : #313131;
+    --bg-color: #ffffff;
+    --sub-color: #ffffff;
+    --white-color: #fff;
+    --font-color : #000;
+
+
+    /* Fuente y tipografia */
+    --body-font: 'Poppins', 'IBM Plex Sans KR';
+    --normal-font-size: 1.5rem;
+    --small-font-size: 1rem;    
+
+    /* z index */
+    --z-fixed: 100;
+}
+
+@font-face {
+    font-family: 'IBM Plex Sans KR', sans-serif;
+    src: url("https://fonts.googleapis.com/css2?family=Fira+Code&family=IBM+Plex+Sans+KR:wght@300&display=swap");
+    unicode-range: U+AC00-D7A3;
+}
+
+/* BASE */
+*, ::before, ::after {
+    box-sizing: border-box;
+}
+
+body {
+    position: relative;
+    margin: 0;
+    padding: 2rem 0 0 6.75rem;  /*2rem 0 0 6.75rem*/
+    font-family: var(--body-font);
+    font-size: var(--normal-font-size);
+    color: var(--font-color);
+    background-color: var(--bg-color);
+    transition: .5s;
+}
+
+.container {
+    margin-left : 9.25rem;
+}
+
+h1 {
+    margin: 0;
+}
+
+ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+}
+
+/* l NAV */
+.l-navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: var(--nav--width);
+    height: 100vh;
+    background-color: var(--nav-color);
+    color: var(--white-color);
+    padding: 1.5rem 1.5rem 2rem;
+    transition: .5s;
+    z-index: var(--z-fixed);
+}
+
+/* NAV */
+.nav {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow: hidden;
+}
+
+.nav__brand {
+    display: grid;
+    grid-template-columns: max-content max-content;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.nav__toggle {
+    font-size: 1.25rem;
+    padding: .75rem;
+    cursor: pointer;
+}
+
+.nav__logo {
+    color: var(--white-color);
+    font-weight: 600;
+}
+
+.nav__link {
+    display: grid;
+    grid-template-columns: max-content max-content;
+    align-items: center;
+    column-gap: .75rem;
+    padding: .75rem;
+    color: var(--white-color);
+    border-radius: .5rem;
+    margin-bottom: 1rem;
+    transition: .3s;
+    cursor: pointer;
+}
+
+.nav__link:hover {
+    background-color: var(--first-color);
+}
+
+.nav__icon {
+    font-size: 1.25rem;
+}
+
+.nav_name {
+    font-size: var(--small-font-size);
+}
+
+/* Expander menu */
+/* .expander {
+    width: calc(var(--nav--width) + 9.25rem);
+} */
+
+/* Add padding body*/
+.body-pd {
+    padding: 2rem 0 0 16rem;
+}
+
+/* Active links menu */
+.active {
+    background-color: var(--first-color);
+}
+
+/* COLLAPS */
+.collaps {
+    grid-template-columns: 20px max-content 1fr;
+}
+
+.collaps__link {
+    justify-self: flex-end;
+    transition: .5;
+}
+
+.collaps__menu {
+    display: none;
+    padding: .75rem 2.25rem;
+}
+
+.collaps__sublink {
+    color: var(--sub-color);
+    font-size: var(--small-font-size);
+}
+
+.collaps__sublink:hover {
+    color: var(--white-color);
+}
+
+/* Show collaps */
+.showCollapse {
+    display: block;
+}
+
+/* Rotate icon */
+.rotate {
+    transform: rotate(180deg);
+    transition: .5s;
+}
