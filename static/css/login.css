@@ -26,10 +26,11 @@
   .login-form {
       background: var(--nav-color);
       width: 450px;
+      align-self: center;
       border-radius: 6px;
       margin: 50px auto;
       display: table;
-      padding: 15px 30px 30px;
+      padding: 30px;
       box-sizing: border-box;
   }
   .form-group {
@@ -79,6 +80,18 @@
     height: 56px;
     cursor: pointer;
   }
+
+  .login-form .social_login {
+    border-color: var(--first-color);
+    color: #fff;
+    text-align: center;
+    margin: 0 auto;
+    font-size: 20px;
+    width: 100%;
+    height: 56px;
+    cursor: pointer;
+  }
+
   .login-form .reset-psw {
     float: left;
     width: 100%;
@@ -88,6 +101,17 @@
     text-align: center;
     margin-top: 11px;
   }
+
+  .login-form .signup {
+    float: left;
+    width: 100%;
+    text-decoration: none;
+    color: var(--white-color);
+    font-size: 18px;
+    text-align: center;
+    margin-top: 11px;
+  }
+  
   .login-form button:hover{
     opacity: 0.9;
   }

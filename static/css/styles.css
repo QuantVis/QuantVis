@@ -1,135 +1,138 @@
 /* 사이드바 레퍼런스 : https://blog.naver.com/maestrois/222188488158 */
 /* GOOGLE FONTS */
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap");
-@import url('https://fonts.googleapis.com/css2?family=Fira+Code&family=IBM+Plex+Sans+KR:wght@300&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Fira+Code&family=IBM+Plex+Sans+KR:wght@300&display=swap");
 
 /* VARIABLES CSS */
 :root {
-    --nav--width: (90px + 9.25rem);;
+  --nav--width: (90px + 9.25rem);
 
-    /* Colores */
-    --first-color: #04C5C2;
-    --nav-color : #313131;
-    --bg-color: #ffffff;
-    --sub-color: #ffffff;
-    --white-color: #fff;
-    --font-color : #000;
+  /* Colores */
+  --first-color: #04c5c2;
+  --nav-color: #313131;
+  --bg-color: #ffffff;
+  --sub-color: #ffffff;
+  --white-color: #fff;
+  --font-color: #000;
 
+  /* Fuente y tipografia */
+  --body-font: "Poppins", "IBM Plex Sans KR";
+  --normal-font-size: 1.5rem;
+  --small-font-size: 1rem;
 
-    /* Fuente y tipografia */
-    --body-font: 'Poppins', 'IBM Plex Sans KR';
-    --normal-font-size: 1.5rem;
-    --small-font-size: 1rem;    
-
-    /* z index */
-    --z-fixed: 100;
+  /* z index */
+  --z-fixed: 100;
 }
 
 @font-face {
-    font-family: 'IBM Plex Sans KR', sans-serif;
-    src: url("https://fonts.googleapis.com/css2?family=Fira+Code&family=IBM+Plex+Sans+KR:wght@300&display=swap");
-    unicode-range: U+AC00-D7A3;
+  font-family: "IBM Plex Sans KR", sans-serif;
+  src: url("https://fonts.googleapis.com/css2?family=Fira+Code&family=IBM+Plex+Sans+KR:wght@300&display=swap");
+  unicode-range: U+AC00-D7A3;
 }
 
 /* BASE */
-*, ::before, ::after {
-    box-sizing: border-box;
+*,
+::before,
+::after {
+  box-sizing: border-box;
 }
 
 body {
-    position: relative;
-    margin: 0;
-    padding: 2rem 0 0 6.75rem;  /*2rem 0 0 6.75rem*/
-    font-family: var(--body-font);
-    font-size: var(--normal-font-size);
-    color: var(--font-color);
-    background-color: var(--bg-color);
-    transition: .5s;
+  position: relative;
+  margin: 0;
+  padding: 2rem 0 0 6.75rem; /*2rem 0 0 6.75rem*/
+  font-family: var(--body-font);
+  font-size: var(--small-font-size);
+  color: var(--font-color);
+  background-color: var(--bg-color);
+  transition: 0.5s;
 }
 
 .container {
-    margin-left : 9.25rem;
+  width: 100%;
+  align-items: center;
+  margin-left: 9.25rem;
 }
 
 h1 {
-    margin: 0;
+  margin: 0;
 }
 
 ul {
-    margin: 0;
-    padding: 0;
-    list-style: none;
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
 a {
-    text-decoration: none;
+  text-decoration: none;
 }
 
 /* l NAV */
 .l-navbar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: var(--nav--width);
-    height: 100vh;
-    background-color: var(--nav-color);
-    color: var(--white-color);
-    padding: 1.5rem 1.5rem 2rem;
-    transition: .5s;
-    z-index: var(--z-fixed);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: var(--nav--width);
+  height: 100vh;
+  background-color: var(--nav-color);
+  color: var(--white-color);
+  padding: 1.5rem 1.5rem 2rem;
+  transition: 0.5s;
+  z-index: var(--z-fixed);
 }
 
 /* NAV */
 .nav {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    overflow: hidden;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
 }
 
 .nav__brand {
-    display: grid;
-    grid-template-columns: max-content max-content;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 2rem;
+  display: grid;
+  grid-template-columns: max-content max-content;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
 }
 
 .nav__toggle {
-    font-size: 1.25rem;
-    padding: .75rem;
-    cursor: pointer;
+  font-size: 1.25rem;
+  padding: 0.75rem;
+  cursor: pointer;
 }
 
 .nav__logo {
-    color: var(--white-color);
-    font-weight: 600;
+  color: var(--white-color);
+  font-weight: 600;
 }
 
 .nav__link {
-    display: grid;
-    grid-template-columns: max-content max-content;
-    align-items: center;
-    column-gap: .75rem;
-    padding: .75rem;
-    color: var(--white-color);
-    border-radius: .5rem;
-    margin-bottom: 1rem;
-    transition: .3s;
-    cursor: pointer;
+  display: grid;
+  grid-template-columns: max-content max-content;
+  align-items: center;
+  column-gap: 0.75rem;
+  padding: 0.75rem;
+  color: var(--white-color);
+  border-radius: 0.5rem;
+  margin-bottom: 1rem;
+  transition: 0.3s;
+  cursor: pointer;
 }
 
 .nav__link:hover {
-    background-color: var(--first-color);
+  background-color: var(--first-color);
 }
 
 .nav__icon {
-    font-size: 1.25rem;
+  font-size: 1.25rem;
 }
 
 .nav_name {
-    font-size: var(--small-font-size);
+  font-size: var(--small-font-size);
 }
 
 /* Expander menu */
@@ -139,45 +142,45 @@ a {
 
 /* Add padding body*/
 .body-pd {
-    padding: 2rem 0 0 16rem;
+  padding: 2rem 0 0 16rem;
 }
 
 /* Active links menu */
 .active {
-    background-color: var(--first-color);
+  background-color: var(--first-color);
 }
 
 /* COLLAPS */
 .collaps {
-    grid-template-columns: 20px max-content 1fr;
+  grid-template-columns: 20px max-content 1fr;
 }
 
 .collaps__link {
-    justify-self: flex-end;
-    transition: .5;
+  justify-self: flex-end;
+  transition: 0.5;
 }
 
 .collaps__menu {
-    display: none;
-    padding: .75rem 2.25rem;
+  display: none;
+  padding: 0.75rem 2.25rem;
 }
 
 .collaps__sublink {
-    color: var(--sub-color);
-    font-size: var(--small-font-size);
+  color: var(--sub-color);
+  font-size: var(--small-font-size);
 }
 
 .collaps__sublink:hover {
-    color: var(--white-color);
+  color: var(--white-color);
 }
 
 /* Show collaps */
 .showCollapse {
-    display: block;
+  display: block;
 }
 
 /* Rotate icon */
 .rotate {
-    transform: rotate(180deg);
-    transition: .5s;
+  transform: rotate(180deg);
+  transition: 0.5s;
 }
