@@ -1,4 +1,56 @@
 {% extends 'layout.html' %}
-{% block content %}
-<p>개인정보 수정하기</p>
+{% block head %}
+<!-- CSS -->
+<link rel="stylesheet" href="/static/css/login.css">
+<style>
+  body {
+    background-color: #363636
+  }
+</style>
+{% endblock %}
+{% block content%}
+<div class="login-form">
+  <div class="form-group">
+    <h1> Settings </h1>
+    {% with messages = get_flashed_messages() %} {% if messages %} {% for msg in messages %}
+    <div class="alert alert-primary d-flex align-items-center" role="alert">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+        class="bi bi-exclamation-triangle-fill flex-shrink-0 me-2" viewBox="0 0 16 16" role="img" aria-label="Warning:">
+        <path
+          d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
+      </svg>
+      <div> {{ msg }} </div>
+    </div>
+  </div>
+  {% endfor %}{% endif %} {% endwith %}
+  <form id="settingForm" method="POST" action="settings">
+    <div class="form-group">
+      {% if userdict['email'] %}
+      <input type="email" id="email" name="email" placeholder="E-mail Address" value="{{userdict['email']}}" readonly>
+      {% else %}
+      <input type="email" id="email" name="email" placeholder="E-mail Address">
+      {% endif %}
+    </div>
+    <div class="form-group">
+      {% if userdict['nick'] %}
+      <input type="text" id="nick" name="nick" placeholder="Nickname" value="{{userdict['nick']}}">
+      {% else %}
+      <input type="text" id="nick" name="nick" placeholder="Nickname">
+      {% endif %}
+    </div>
+    {% if userdict['method'] == 'local' %}
+    <div class="form-group">
+      <input type="password" id="password1" name="password1" placeholder="New Password">
+    </div>
+    <div class="form-group">
+      <input type="password" id="password2" name="password2" placeholder="Confirm New Password">
+    </div>
+    {% endif %}
+    <button class="login-btn" type="submit">UPDATE</button>
+    <p class="reset-psw" style="color:white">We value your privacy!</p>
+    <div class="form-group" style="height:50px"></div>
+  </form>
+</div>
+</div>
+
 {% endblock %}
