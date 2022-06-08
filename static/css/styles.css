@@ -5,7 +5,7 @@
 
 /* VARIABLES CSS */
 :root {
-  --nav--width: (90px + 9.25rem);
+  --nav--width: (100px + 9.25rem);
 
   /* Colores */
   --first-color: #04c5c2;
@@ -40,7 +40,7 @@
 body {
   position: relative;
   margin: 0;
-  padding: 2rem 0 0 6.75rem; /*2rem 0 0 6.75rem*/
+  padding: 0rem 0 0 6.75rem; /*2rem 0 0 6.75rem기본값, 06/08 영게이가 0으로 바꾸고 NAV바 넣어봄*/ 
   font-family: var(--body-font);
   font-size: var(--small-font-size);
   color: var(--font-color);
@@ -82,7 +82,9 @@ a {
   z-index: var(--z-fixed);
 }
 
-/* NAV */
+
+
+
 .nav {
   height: 100%;
   display: flex;
@@ -177,6 +179,7 @@ a {
 /* Show collaps */
 .showCollapse {
   display: block;
+  width: max-content;
 }
 
 /* Rotate icon */

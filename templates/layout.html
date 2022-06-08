@@ -10,6 +10,7 @@
     {% block head %}
     {% endblock %}
     <title>QuantVis</title>
+
 </head>
 <body>
     <div id="body-pd p-3">
@@ -24,10 +25,17 @@
                             <ion-icon name="home-outline" class="nav__icon"></ion-icon>
                             <span class="nav_name">Dashboard</span>
                         </a>
-                        <a href="#" class="nav__link">
-                            <ion-icon name="chatbubbles-outline" class="nav__icon"></ion-icon>
-                            <span class="nav_name">Messenger</span>
-                        </a>
+                        <div href="#" class="nav__link dropdown collaps">
+                            <ion-icon name="file-earmark-bar-graph" class="nav__icon"></ion-icon>
+                            <span class="nav_name">Strategies</span>    
+                            <ion-icon name="chevron-down-outline" class="collaps__link"></ion-icon>
+    
+                            <ul class="collaps__menu">   <!--블루프린트명.함수-->
+                                <li> <a href="{{ url_for('strategy_1.strategy_1_main') }}" class="collaps__sublink">MPT 자산분배</a></li>
+                                <li> <a href="#" class="collaps__sublink">Joel Greenblatt</a></li>
+                                <li> <a href="#" class="collaps__sublink">William J. O'Neil</a></li>
+                            </ul>
+                        </div>
     
                         <div href="#" class="nav__link dropdown collaps">
                             <ion-icon name="folder-outline" class="nav__icon"></ion-icon>
@@ -84,6 +92,8 @@
             </div>
         </div>
     </div>
+
+
     <!-- IONICONS -->
     <script src="https://unpkg.com/ionicons@5.2.3/dist/ionicons.js"></script>
     <!-- JS -->
