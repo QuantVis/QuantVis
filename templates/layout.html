@@ -48,17 +48,6 @@
                                 <a href="#" class="collaps__sublink">Members</a>
                             </ul>
                         </div>
-
-                        <div href="#" class="nav__link dropdown collaps {% if request.path == url_for('portfolio.portfolio') or request.path == url_for('portfolio.portfolio_list') or request.path == url_for('portfolio.portfolio_result')%} active {% endif %}">
-                            <ion-icon name="folder-outline" class="nav__icon"></ion-icon>
-                            <span class="nav_name">Portfolio</span>    
-                            <ion-icon name="chevron-down-outline" class="collaps__link"></ion-icon>
-    
-                            <ul class="collaps__menu">
-                                <li><a href="{{ url_for('portfolio.portfolio') }}" class="collaps__sublink">Portfolio</a></li>
-                                <li><a href="#" class="collaps__sublink">Back Testing</a></li>
-                            </ul>
-                        </div>
     
                         <a href="#" class="nav__link">
                             <ion-icon name="pie-chart-outline" class="nav__icon"></ion-icon>
