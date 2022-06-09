@@ -3,10 +3,12 @@ from authlib.integrations.flask_client import OAuth
 from datetime import timedelta
 import os, requests
 from module.user_login import user_login     #** 해당 파일에서 적용한 변수명으로 가져옴
+from module.strategy_1 import strategy_1
 
 # App config
 app = Flask(__name__)
 app.register_blueprint(user_login)  #** 블루프린트 적용 
+app.register_blueprint(strategy_1)
 
 # Session config
 app.secret_key = os.urandom(24)
