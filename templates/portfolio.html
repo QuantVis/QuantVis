@@ -1,0 +1,138 @@
+{% extends 'layout.html' %}
+{% block content %}
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="/static/css/bootstrap_p.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <style>
+      body {
+        background-color: #363636;
+      }
+    </style>
+</head>
+<body>
+<div >
+  <div style="height:100%; width: 1200px; text-align:center;">
+    <div style="vertical-align:middle;  margin-top:15px;">
+      <h2 style="color:white;">Portfolio</h2></div>
+    <hr style="color:white;">
+    <div style="height:100%; width:1200px;" >
+      <form action="./insert" method="post" name="regform">
+        <div style="width:1200px;" align="center">
+          <br>
+            <table class="table rounded border border-light border-3 table table-striped caption-top" id="table" border="1" style="width:1000px;">
+              <caption style="color:white;"><span style="color:white;">Portfolio Name</span>&nbsp;&nbsp;<input class="rounded border-1 btn-outline-dark" type="text" size="15" name="pfname"><br><br><b>국내주식</b></caption>
+              <thead class="table-light">
+                <tr>
+                  <th scope="col">No.</th>
+                  <th scope="col">티커심볼</th>
+                  <th scope="col">주문상태</th>
+                  <th scope="col">주식수</th>
+                  <th scope="col">주가</th>
+                  <th scope="col" style="text-align:right;"></th>
+                  <th style="text-align:left;">
+                  </th>
+                </tr>
+              </thead>
+              <tbody id="tbody_K" class="tbody table-light">
+                <tr>
+                  <td style="text-align:center;" scope="row"><strong>1</strong></td>
+                  <td>
+                    <input class="btn btn-outline-dark btn-sm" aria-label="Default select example" type="text" list="list" name="ticker"/>
+                    <datalist id ="list">
+                      {% for i in range(data['K_code'] | length) %}
+                      <option>{{data['K_company'][i]}}&emsp;|&emsp;{{data['K_code'][i]}}</option>
+                      {% endfor %}
+                    </datalist>
+                  </td>
+                  <td>
+                    <select class="btn btn-outline-dark btn-sm" aria-label="Default select example" name="order_state">
+                        <option selected>매수</option>
+                        <option value="매도">매도</option>
+                        <option value="예약">예약</option>
+                    </select>
+                  </td>
+                  <td><input class="rounded-3 border-1 btn-outline-dark" type="text" size="15" name="stock_cnt"></td>
+                  <td><input class="rounded-3 border-1 btn-outline-dark" type="text" size="15" value="" name="price"></td>
+                  <td style="text-align:center;"><input type="button" value="현재 주가로" class="btn btn-outline-success btn-sm" name="today_price" onclick="today_price_get(this);"></td>
+                  <td style="text-align:center;"><input type="button" value="한 줄 삭제" class="btn btn-outline-danger btn-sm" name="clear_row" onclick="clear_row_del(this);"></td>
+              </tr>
+              </tbody>
+              <tfoot class="table-light">
+                <tr>
+                  <td></td>
+                  <td colspan="6" style="text-align: right;">
+                  <input type="button" value="취소(Home)" class="btn btn-outline-dark btn-sm" onclick="location.href='/'">&nbsp;&nbsp;
+                  <input type="button" value="다시쓰기" class="btn btn-outline-dark btn-sm" onclick="location.href='/portfolio'">&nbsp;&nbsp;
+                  <input type="button" value="열 추가" class="btn btn-outline-dark btn-sm" onclick="ADDRow_K();">&nbsp;&nbsp;
+                  <input type="button" value="내 포트폴리오 목록" class="btn btn-outline-dark btn-sm" onclick="location.href='./list'">
+                  </td>
+                  </tr>
+              </tfoot>
+            </table>
+        </div>
+        <div style="width:1200px;" align="center">
+          <br>
+            <table class="table rounded border border-light border-3 table table-striped caption-top" id="table" border="1" style="width:1000px;">
+              <caption style="color:white;"><b>해외주식</b><br></caption>
+              <thead class="table-light">
+                <tr>
+                  <th scope="col">No.</th>
+                  <th scope="col">티커심볼</th>
+                  <th scope="col">주문상태</th>
+                  <th scope="col">주식수</th>
+                  <th scope="col">주가</th>
+                  <th scope="col" style="text-align:right;"></th>
+                  <th style="text-align:left;">
+                  </th>
+                </tr>
+              </thead>
+              <tbody id="tbody_F" class="table-light tbody">
+              <tr>
+                <td style="text-align:center;" scope="row"><strong>1</strong></td>
+                <td>
+                  <input class="btn btn-outline-dark btn-sm" aria-label="Default select example" type="text" list="list_F" name="ticker"/>
+                  <datalist id ="list_F">
+                    {% for j in range(data['F_code'] | length) %}
+                    <option>{{data['F_company'][j]}}&emsp;|&emsp;{{data['F_code'][j]}}</option>
+                    {% endfor %}
+                  </datalist>
+                </td>
+                <td>
+                  <select class="btn btn-outline-dark btn-sm" aria-label="Default select example" name="order_state">
+                      <option selected>매수</option>
+                      <option value="매도">매도</option>
+                      <option value="예약">예약</option>
+                  </select>
+                </td>
+                <td><input class="rounded-3 btn-outline-dark border-1" type="text" size="15" name="stock_cnt"></td>
+                <td><input class="rounded-3 btn-outline-dark border-1" type="text" size="15" value="{{price}}" name="price"></td>
+                <td style="text-align:center;"><input type="button" value="현재 주가로" class="btn btn-outline-success btn-sm" name="today_price" onclick="today_price_get(this);"></td>
+                <td style="text-align:center;"><input type="button" value="한 줄 삭제" class="btn btn-outline-danger btn-sm" name="clear_row" onclick="clear_row_del(this);"></td>
+              </tr>
+              </tbody>
+              <tfoot class="table-light">
+                <tr>
+                  <td></td>
+                  <td colspan="6" style="text-align: right;">
+                  <input type="submit" value="저장하기" class="btn btn-outline-dark btn-sm">&nbsp;&nbsp;
+                  <input type="button" value="취소(Home)" class="btn btn-outline-dark btn-sm" onclick="location.href='/'">&nbsp;&nbsp;
+                  <input type="button" value="다시쓰기" class="btn btn-outline-dark btn-sm" onclick="location.href='/portfolio'">&nbsp;&nbsp;
+                  <input type="button" value="열 추가" class="btn btn-outline-dark btn-sm" onclick="ADDRow_F();">&nbsp;&nbsp;
+                  <input type="button" value="내 포트폴리오 목록" class="btn btn-outline-dark btn-sm" onclick="location.href='./list'">
+                  </td>
+                  </tr>
+              </tfoot>
+            </table>
+        </div>
+      </form>
+  </div>
+</div>
+  <!--javascript-->
+  <script type='text/javascript'>
+    var data = {{data | tojson}}
+  </script>
+  <script src="/static/js/portfolio.js"></script>
+  <script type="module" src="https://unpkg.com/ionicons@5.2.3/dist/ionicons/ionicons.esm.js"></script>
+</body>
+  {% endblock %}
