@@ -117,7 +117,7 @@ def user_settings():
             if not nick :
                 flash('닉네임은 필수 입력 요소입니다')
                 return render_template('user_settings.html', userdict=userdict)
-            if userdb.nick_check(nick)[0] != userdict['id'] :
+            if userdb.nick_check(nick) != None and userdb.nick_check(nick)[0] != userdict['id'] :
                 flash('중복되는 닉네임입니다')
                 return render_template('user_settings.html', userdict=userdict)
             
@@ -132,6 +132,8 @@ def user_settings():
             else :
                 userdb.set_change1(email=email.strip(), nick=nick.strip())
                 flash('정보 변경이 완료되었습니다')
+                session['email'] = email
+                session['nick'] = nick
                 return redirect('settings')                    
         
         else :
