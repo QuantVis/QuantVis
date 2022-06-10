@@ -39,7 +39,6 @@ def get_five():
         if differ < 0 : flag = False
         now[code] = [ flag, round(five[code]['close'][-1],2), round(differ,2), round(percent,2) ]
     
-    print(now)
     return five, now
 
 
