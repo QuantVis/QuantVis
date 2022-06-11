@@ -117,7 +117,7 @@ def user_settings():
             if not nick :
                 flash('닉네임은 필수 입력 요소입니다')
                 return render_template('user_settings.html', userdict=userdict)
-            if userdb.nick_check(nick)[0] != userdict['id'] :
+            if userdb.nick_check(nick) != None and userdb.nick_check(nick) != userdict['id'] :
                 flash('중복되는 닉네임입니다')
                 return render_template('user_settings.html', userdict=userdict)
             
@@ -132,18 +132,32 @@ def user_settings():
             else :
                 userdb.set_change1(email=email.strip(), nick=nick.strip())
                 flash('정보 변경이 완료되었습니다')
+                session['email'] = email
+                session['nick'] = nick
                 return redirect('settings')                    
         
         else :
-            if (session['email'] and (not nick)) or (session['id'] and (not email)) :
-                flash('이메일과 닉네임은 필수 입력 요소입니다')
-                return render_template('user_settings.html', userdict=userdict)
-            else :                
-                userdb.set_change2(user_id = userdict['id'], nick = nick.strip(), email = email)
-                flash('정보 변경이 완료되었습니다')
-                session['email'] = email
-                session['nick'] = nick
-                return redirect('settings')
+            if userdict['method'] == 'google' :
+                if not nick :
+                    flash('닉네임은 필수 입력 요소입니다')
+                    return render_template('user_settings.html', userdict=userdict)
+                if userdb.nick_check(nick) != None and userdb.nick_check(nick) != userdict['id'] :
+                        flash('중복되는 닉네임입니다')
+                        return render_template('user_settings.html', userdict=userdict)
+            else :
+                if not email or not nick :
+                    flash('이메일과 닉네임은 필수 입력 요소입니다')
+                    return render_template('user_settings.html', userdict=userdict)
+                
+                if userdb.nick_check(nick) != None and userdb.nick_check(nick) != userdict['id'] :
+                        flash('중복되는 닉네임입니다')
+                        return render_template('user_settings.html', userdict=userdict)                
+                 
+            userdb.set_change2(user_id = userdict['id'], nick = nick.strip(), email = email)
+            flash('정보 변경이 완료되었습니다')
+            session['email'] = email
+            session['nick'] = nick
+            return redirect('settings')
     
 @user_login.route('/find_pw', methods=['GET', 'POST'])
 def find_pw() :
@@ -253,4 +267,4 @@ def kakao_callback():
 @user_login.route('/logout')
 def logout():
     session.clear()
-    return redirect('/')
+    return redirect(url_for('user_login.login'))

@@ -1,4 +1,560 @@
 {% extends 'layout.html' %}
+{% block head %}
+<link rel="stylesheet" href="static/css/index.css">
+<!-- chart CSS -->
+<link href="static/plugins/bower_components/chartist/dist/chartist.min.css" rel="stylesheet">
+<link rel="stylesheet" href="static/plugins/bower_components/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.css">
+<!-- gauge chart -->
+<script src="https://cdn.anychart.com/releases/8.11.0/js/anychart-base.min.js" type="text/javascript"></script>
+<script src="https://cdn.anychart.com/releases/8.11.0/js/anychart-bundle.min.js"></script>
+<script src="https://cdn.anychart.com/releases/8.11.0/js/anychart-base.min.js"></script>
+{% endblock %}
 {% block content %}
-{{ session['email'] }}
+<div class="row justify-content-center" style="margin-top:20px">
+    <div class="col-lg-4 col-md-12">
+        <div class="white-box analytics-info">
+            <h3 class="box-title">KOSPI</h3>
+            <ul class="list-inline two-part d-flex align-items-center mb-0">
+                <li>
+                    <div id="sparklinedash"><canvas width="67" height="30"
+                            style="display: inline-block; width: 67px; height: 30px; vertical-align: top;"></canvas>
+                    </div>
+                </li>
+                <li class="ms-auto">
+                    {% if now['kospi'][0] %}
+                    <span class="counter text-purple">{{now['kospi'][1]}}</span>
+                    <span class="counter text-danger" style="font-size:large;">+{{now['kospi'][2]}}
+                        (+{{now['kospi'][3]}}%)</span>
+                    {% else %}
+                    <span class="counter text-purple">{{now['kospi'][1]}}</span>
+                    <span class="counter text-blue" style="font-size:large;">{{now['kospi'][2]}}
+                        ({{now['kospi'][3]}}%)</span>
+                    {% endif %}
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="col-lg-4 col-md-12">
+        <div class="white-box analytics-info">
+            <h3 class="box-title">KOSDAQ</h3>
+            <ul class="list-inline two-part d-flex align-items-center mb-0">
+                <li>
+                    <div id="sparklinedash2"><canvas width="67" height="30"
+                            style="display: inline-block; width: 67px; height: 30px; vertical-align: top;"></canvas>
+                    </div>
+                </li>
+                <li class="ms-auto">
+                    {% if now['kosdaq'][0] %}
+                    <span class="counter text-purple">{{now['kosdaq'][1]}}</span>
+                    <span class="counter text-danger" style="font-size:large;">+{{now['kosdaq'][2]}}
+                        (+{{now['kosdaq'][3]}}%)</span>
+                    {% else %}
+                    <span class="counter text-purple">{{now['kosdaq'][1]}}</span>
+                    <span class="counter text-blue" style="font-size:large;">{{now['kosdaq'][2]}}
+                        ({{now['kosdaq'][3]}}%)</span>
+                    {% endif %}
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="col-lg-4 col-md-12">
+        <div class="white-box analytics-info">
+            <h3 class="box-title">USD/KRW</h3>
+            <ul class="list-inline two-part d-flex align-items-center mb-0">
+                <li>
+                    <div id="sparklinedash3"><canvas width="67" height="30"
+                            style="display: inline-block; width: 67px; height: 30px; vertical-align: top;"></canvas>
+                    </div>
+                </li>
+                <li class="ms-auto">
+                    {% if now['krwx'][0] %}
+                    <span class="counter text-purple">{{now['krwx'][1]}}</span>
+                    <span class="counter text-danger" style="font-size:large;">+{{now['krwx'][2]}}
+                        (+{{now['krwx'][3]}}%)</span>
+                    {% else %}
+                    <span class="counter text-purple">{{now['krwx'][1]}}</span>
+                    <span class="counter text-blue" style="font-size:large;">{{now['krwx'][2]}}
+                        ({{now['krwx'][3]}}%)</span>
+                    {% endif %}
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="row justify-content-center">
+    <div class="col-lg-4 col-md-12">
+        <div class="white-box analytics-info">
+            <h3 class="box-title">NASDAQ</h3>
+            <ul class="list-inline two-part d-flex align-items-center mb-0">
+                <li>
+                    <div id="sparklinedash4"><canvas width="67" height="30"
+                            style="display: inline-block; width: 67px; height: 30px; vertical-align: top;"></canvas>
+                    </div>
+                </li>
+                <li class="ms-auto">
+                    {% if now['nasdaq'][0] %}
+                    <span class="counter text-purple">{{now['nasdaq'][1]}}</span>
+                    <span class="counter text-green" style="font-size:large;">+{{now['nasdaq'][2]}}
+                        (+{{now['nasdaq'][3]}}%)</span>
+                    {% else %}
+                    <span class="counter text-purple">{{now['nasdaq'][1]}}</span>
+                    <span class="counter text-danger" style="font-size:large">{{now['nasdaq'][2]}}
+                        ({{now['nasdaq'][3]}}%)</span>
+                    {% endif %}
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="col-lg-4 col-md-12">
+        <div class="white-box analytics-info">
+            <h3 class="box-title">S&P 500</h3>
+            <ul class="list-inline two-part d-flex align-items-center mb-0">
+                <li>
+                    <div id="sparklinedash5"><canvas width="67" height="30"
+                            style="display: inline-block; width: 67px; height: 30px; vertical-align: top;"></canvas>
+                    </div>
+                </li>
+                <li class="ms-auto">
+                    {% if now['snp'][0] %}
+                    <span class="counter text-purple">{{now['snp'][1]}}</span>
+                    <span class="counter text-green" style="font-size:large;">+{{now['snp'][2]}}
+                        (+{{now['snp'][3]}}%)</span>
+                    {% else %}
+                    <span class="counter text-purple">{{now['snp'][1]}}</span>
+                    <span class="counter text-danger" style="font-size:large">{{now['snp'][2]}}
+                        ({{now['snp'][3]}}%)</span>
+                    {% endif %}
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="col-lg-4 col-md-12">
+        <div class="white-box analytics-info">
+            <h3 class="box-title">DOW JONES</h3>
+            <ul class="list-inline two-part d-flex align-items-center mb-0">
+                <li>
+                    <div id="sparklinedash6"><canvas width="67" height="30"
+                            style="display: inline-block; width: 67px; height: 30px; vertical-align: top;"></canvas>
+                    </div>
+                </li>
+                <li class="ms-auto">
+                    {% if now['dow'][0] %}
+                    <span class="counter text-purple">{{now['dow'][1]}}</span>
+                    <span class="counter text-green" style="font-size:large;"> +{{now['dow'][2]}}
+                        (+{{now['dow'][3]}}%)</span>
+                    {% else %}
+                    <span class="counter text-purple">{{now['dow'][1]}}</span>
+                    <span class="counter text-danger" style="font-size:large"> {{now['dow'][2]}}
+                        ({{now['dow'][3]}}%)</span>
+                    {% endif %}
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="row justify-content-center white-box">
+    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+        <h3 class="box-title">증시 MAP</h3>
+        <div class="d-flex justify-content-end">
+            <!-- 선택 시 active -->
+            <button type="button" id="ALL" onClick="tree('ALL_tree');" class="btn btn-outline-dark">TOP
+                1000</button>
+            <button type="button" id="KOSPI" onClick="tree('KOSPI_tree');" class="btn btn-outline-dark">KOSPI</button>
+            <button type="button" id="KOSDAQ" onClick="tree('KOSDAQ_tree');"
+                class="btn btn-outline-dark">KOSDAQ</button>
+            <button type="button" id="nasdaq" onClick="tree('nasdaq_tree');" class="btn btn-outline-dark">NASDAQ
+                100</button>
+            <button type="button" id="dow" onClick="tree('dow_tree');" class="btn btn-outline-dark">DOW
+                30</button>
+        </div>
+        <img class="img-fluid mx-auto d-block" style="margin-top:10px" id="showMap" />
+        <div style="height:21px"><img id="showGauge" class="float-end" /></div>
+    </div>
+</div>
+<div class="row justify-content-center">
+    <div class="col">
+        <div class="white-box" style="height: 700px;">
+            <h3 class="box-title">Fear & Greed Gauge</h3>
+            <h1 class="text-center text-decoration-underline" style="margin-top:30px;">&ldquo;
+                {{gauge_data['desc']}} &rdquo;</h1>
+            <div id="fng_gauge" style="height:60%;"></div>
+            <div class="row justify-content-center" style="margin-top:25px">
+                <div class="badge text-wrap" style="width: 10rem; background-color: #cc0000">0 ~ 25 : EXTREME FEAR
+                </div>
+                <div class="badge text-wrap" style="width: 10rem; background-color: #fab54e">25 ~ 40 : FEAR</div>
+                <div class="badge text-wrap" style="width: 10rem; background-color: #ffcc00">45 ~ 55 : NEUTRAL</div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="badge text-wrap" style="width: 10rem; background-color: #cccc00">55 ~ 75 : GREED
+                </div>
+                <div class="badge text-wrap" style="width: 12rem; background-color: #99cc00">75 ~ 100 : EXTREME
+                    GREED</div>
+            </div>
+            <p class="text-end" style="margin-top:10px"><span>{{gauge_data['updated']}}</span></p>
+        </div>
+    </div>
+    <div class="col">
+        <div class="white-box">
+            <h3 class="box-title mb-0">거래량 TOP 5 in S&P 500</h3>
+            <div class="table-responsive">
+                <table class="table no-wrap">
+                    <thead>
+                        <tr>
+                            <th class="border-top-0">RANK</th>
+                            <th class="border-top-0">Ticker</th>
+                            <th class="border-top-0">현재가</th>
+                            <th class="border-top-0">등락률</th>
+                            <th class="border-top-0">거래량</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for i in range(5) %}
+                        <tr>
+                            <td>{{i+1}}</td>
+                            <td>{{TOP5['usvol'][i][0]}}</td>
+                            <td>$ {{TOP5['usvol'][i][1]}}</td>
+                            {% if TOP5['usvol'][i][2][:1] == '-' %}
+                            <td class="text-red">{{TOP5['usvol'][i][2]}}</td>
+                            {% else %}
+                            <td class="text-green">{{TOP5['usvol'][i][2]}}</td>
+                            {% endif %}
+                            <td><span class="text-success">{{TOP5['usvol'][i][3]}}</span></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="white-box">
+            <h3 class="box-title mb-0">거래량 TOP 5 in KOSPI 200</h3>
+            <div class="table-responsive">
+                <table class="table no-wrap">
+                    <thead>
+                        <tr>
+                            <th class="border-top-0">RANK</th>
+                            <th class="border-top-0">종목명</th>
+                            <th class="border-top-0">현재가</th>
+                            <th class="border-top-0">등락률</th>
+                            <th class="border-top-0">거래량</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for i in range(5) %}
+                        <tr>
+                            <td>{{i+1}}</td>
+                            <td>{{TOP5['kvol'][i][0]}}</td>
+                            <td>&#8361; {{TOP5['kvol'][i][1]}}</td>
+                            {% if TOP5['kvol'][i][2][:1] == '-' %}
+                            <td class="text-blue">{{TOP5['kvol'][i][2]}}</td>
+                            {% else %}
+                            <td class="text-red">{{TOP5['kvol'][i][2]}}</td>
+                            {% endif %}
+                            <td><span class="text-success">{{TOP5['kvol'][i][3]}}</span></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row justify-content-center">
+    <div class="col">
+        <div class="white-box">
+            <h3 class="box-title mb-0">상승 TOP 5 in S&P 500</h3>
+            <div class="table-responsive">
+                <table class="table no-wrap">
+                    <thead>
+                        <tr>
+                            <th class="border-top-0">RANK</th>
+                            <th class="border-top-0">Ticker</th>
+                            <th class="border-top-0">현재가</th>
+                            <th class="border-top-0">등락률</th>
+                            <th class="border-top-0">거래량</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for i in range(5) %}
+                        <tr>
+                            <td>{{i+1}}</td>
+                            <td>{{TOP5['usrise'][i][0]}}</td>
+                            <td>$ {{TOP5['usrise'][i][1]}}</td>
+                            {% if TOP5['usrise'][i][2][:1] == '-' %}
+                            <td class="text-red">{{TOP5['usrise'][i][2]}}</td>
+                            {% else %}
+                            <td class="text-green">{{TOP5['usrise'][i][2]}}</td>
+                            {% endif %}
+                            <td>{{TOP5['usrise'][i][3]}}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="white-box">
+            <h3 class="box-title mb-0">하락 TOP 5 in S&P 500</h3>
+            <div class="table-responsive">
+                <table class="table no-wrap">
+                    <thead>
+                        <tr>
+                            <th class="border-top-0">RANK</th>
+                            <th class="border-top-0">Ticker</th>
+                            <th class="border-top-0">현재가</th>
+                            <th class="border-top-0">등락률</th>
+                            <th class="border-top-0">거래량</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for i in range(5) %}
+                        <tr>
+                            <td>{{i+1}}</td>
+                            <td>{{TOP5['usfall'][i][0]}}</td>
+                            <td>$ {{TOP5['usfall'][i][1]}}</td>
+                            {% if TOP5['usfall'][i][2][:1] == '-' %}
+                            <td class="text-red">{{TOP5['usfall'][i][2]}}</td>
+                            {% else %}
+                            <td class="text-green">{{TOP5['usfall'][i][2]}}</td>
+                            {% endif %}
+                            <td>{{TOP5['usfall'][i][3]}}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="white-box">
+            <h3 class="box-title mb-0">상승 TOP 5 in KOSPI 200</h3>
+            <div class="table-responsive">
+                <table class="table no-wrap">
+                    <thead>
+                        <tr>
+                            <th class="border-top-0">RANK</th>
+                            <th class="border-top-0">종목명</th>
+                            <th class="border-top-0">현재가</th>
+                            <th class="border-top-0">등락률</th>
+                            <th class="border-top-0">거래량</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for i in range(5) %}
+                        <tr>
+                            <td>{{i+1}}</td>
+                            <td>{{TOP5['krise'][i][0]}}</td>
+                            <td>&#8361; {{TOP5['krise'][i][1]}}</td>
+                            {% if TOP5['krise'][i][2][:1] == '-' %}
+                            <td class="text-blue">{{TOP5['krise'][i][2]}}</td>
+                            {% else %}
+                            <td class="text-red">{{TOP5['krise'][i][2]}}</td>
+                            {% endif %}
+                            <td>{{TOP5['krise'][i][3]}}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="white-box">
+            <h3 class="box-title mb-0">하락 TOP 5 in KOSPI 200</h3>
+            <div class="table-responsive">
+                <table class="table no-wrap">
+                    <thead>
+                        <tr>
+                            <th class="border-top-0">RANK</th>
+                            <th class="border-top-0">종목명</th>
+                            <th class="border-top-0">현재가</th>
+                            <th class="border-top-0">등락률</th>
+                            <th class="border-top-0">거래량</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for i in range(5) %}
+                        <tr>
+                            <td>{{i+1}}</td>
+                            <td>{{TOP5['kfall'][i][0]}}</td>
+                            <td>&#8361; {{TOP5['kfall'][i][1]}}</td>
+                            {% if TOP5['kfall'][i][2][:1] == '-' %}
+                            <td class="text-blue">{{TOP5['kfall'][i][2]}}</td>
+                            {% else %}
+                            <td class="text-red">{{TOP5['kfall'][i][2]}}</td>
+                            {% endif %}
+                            <td>{{TOP5['kfall'][i][3]}}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- All Jquery (static/plugins) -->
+<script src="static/plugins/bower_components/jquery/dist/jquery.min.js"></script>
+<script src="static/plugins/bower_components/jquery-sparkline/jquery.sparkline.min.js"></script>
+<!-- chartist chart(static/plugins) -->
+<script src="static/plugins/bower_components/chartist/dist/chartist.min.js"></script>
+<script src="static/plugins/bower_components/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js"></script>
+
+<!-- INDEX chart -->
+<script type="text/javascript">
+    $(function () {
+        "use strict";
+        // ==============================================================
+        var sparklineLogin = function () {
+            $("#sparklinedash").sparkline({{ five['kospi']['close'] }}, {
+                type: "bar",
+                height: "30",
+                barWidth: "4",
+                resize: true,
+                barSpacing: "5",
+                barColor: "#7ace4c",
+            });
+    $("#sparklinedash2").sparkline({{ five['kosdaq']['close'] }}, {
+        type: "bar",
+        height: "30",
+        barWidth: "4",
+        resize: true,
+        barSpacing: "5",
+        barColor: "#7460ee",
+    });
+    $("#sparklinedash3").sparkline({{ five['krwx']['close'] }}, {
+        type: "bar",
+        height: "30",
+        barWidth: "4",
+        resize: true,
+        barSpacing: "5",
+        barColor: "#11a0f8",
+    });
+    $("#sparklinedash4").sparkline({{ five['nasdaq']['close'] }}, {
+        type: "bar",
+        height: "30",
+        barWidth: "4",
+        resize: true,
+        barSpacing: "5",
+        barColor: "#f33155",
+    });
+    $("#sparklinedash5").sparkline({{ five['snp']['close'] }}, {
+        type: "bar",
+        height: "30",
+        barWidth: "4",
+        resize: true,
+        barSpacing: "5",
+        barColor: "#f31589",
+    });
+    $("#sparklinedash6").sparkline({{ five['dow']['close'] }}, {
+        type: "bar",
+        height: "30",
+        barWidth: "4",
+        resize: true,
+        barSpacing: "5",
+        barColor: "#ffcb6b",
+    });
+    };
+
+    var sparkResize;
+    $(window).on("resize", function (e) {
+        clearTimeout(sparkResize);
+        sparkResize = setTimeout(sparklineLogin, 500);
+    });
+    sparklineLogin();
+    });
+</script>
+<!-- Treemap -->
+<script type="text/javascript">
+
+    // ========================= treemap =====================================
+    function tree(name) {
+
+        if (name == 'dow_tree' | name == 'nasdaq_tree') {
+            document.getElementById("showMap").src = "static/img/" + name + ".png";
+            document.getElementById("showGauge").src = "static/img/global_gauge.png";
+            document.getElementById("showMap").onclick = function () {
+                window.open("https://invest.zum.com/global?cm=invest_main_gnb&category=" + name.split('_')[0]);
+            }
+        }
+        else {
+            document.getElementById("showMap").src = "static/img/" + name + ".png";
+            document.getElementById("showGauge").src = "static/img/local_gauge.png";
+            document.getElementById("showMap").onclick = function () {
+                window.open("https://invest.zum.com/domestic?cm=invest_main_gnb&category=" + name.split('_')[0]);
+            }
+        }
+    };
+
+    tree('ALL_tree');
+</script>
+<!-- ============== guage chart : https://playground.anychart.com/docs/v8/samples/GAUGE_Circular_05 ================= -->
+<script type="text/javascript">
+    anychart.onDocumentReady(function () {
+
+        // create data set on our data
+        var dataSet = anychart.data.set([{{ gauge_data['value']}}]); // 바늘데이터
+
+    // set the gauge type
+    var gauge = anychart.gauges.circular();
+
+
+    // gauge settings
+    gauge.data(dataSet);
+    gauge.padding("10%");
+    gauge.startAngle(270);
+    gauge.sweepAngle(180);
+
+    // axis settings
+    var axis = gauge.axis()
+        .radius(95)
+        .width(1);
+
+    // scale settings
+    axis.scale()
+        .minimum(0)
+        .maximum(100)
+        .ticks([0, 25, 45, 55, 75, 100])
+        ;
+
+    // ticks settings
+    axis.ticks()
+        .type("trapezium")
+        .length("5");
+
+
+    //needle
+    gauge.needle(0)
+        .enabled(true)
+        .startRadius('-5%')
+        .endRadius('80%')
+        .middleRadius(0)
+        .startWidth('0.1%')
+        .endWidth('0.1%')
+        .middleWidth('5%');
+
+
+
+    gauge.label()
+        .text({{ gauge_data['value']}})
+        .anchor('center') //set the position of the label
+        .fontSize(28)
+        .hAlign('center')
+        .offsetY('20%')
+        .offsetX('-50%');
+
+    // range
+    gauge.range({
+        from: 0,
+        to: 120,
+        fill: { keys: ["red", "yellow", "green"] },
+        position: "inside",
+        radius: 100,
+        endSize: "3%",
+        startSize: "3%",
+        zIndex: 10
+    });
+
+    // draw the chart
+    gauge.container("fng_gauge").draw();
+    });
+
+</script>
+
+
 {% endblock %}
