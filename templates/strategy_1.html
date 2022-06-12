@@ -8,44 +8,17 @@
     padding: 0rem 0 0 6.75rem;
   }
 
+  fig { 
+
+    display : block
+  }
+
 
 </style>
 {% endblock %}
 {% block content%}
 <body> 
-<nav class="navbar navbar-dark bg-dark" aria-label="First navbar example">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="#">Never expand</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample01" aria-controls="navbarsExample01" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
 
-    <div class="collapse navbar-collapse" id="navbarsExample01">
-      <ul class="navbar-nav me-auto mb-2">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link disabled">Disabled</a>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-bs-toggle="dropdown" aria-expanded="false">Dropdown</a>
-          <ul class="dropdown-menu" aria-labelledby="dropdown01">
-            <li><a class="dropdown-item" href="#">Action</a></li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
-          </ul>
-        </li>
-      </ul>
-      <form role="search">
-        <input class="form-control" type="search" placeholder="Search" aria-label="Search">
-      </form>
-    </div>
-  </div>
-</nav>
 
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
   <h2 style="color:white;font-size:18px;">MPT(Harry Markowitz)이론 기반의 자산배분 전략</h1>
@@ -77,19 +50,75 @@
 
 
 <br>
-<div> 
+
+{% if codelist %}
+<div class="fig" name= 'fig' id= 'fig'> 
   <p style="color:white;font-size:18px;">*이것만은 알아두세요!</p> 
 <ul style="color:white;font-size:18px;" >
   <li >-입력한 기간동안 변동성을 기반하기 때문에 참고하고자하는 기간이 명확하다면 더욱 좋습니다 (Ex.장기,2008년 금융위기 이후, 2015년 긴축발작 전후 등). 
   </li> 
   <li>-과거 변동성을 기반으로 산출되기 때문에 향후 회사가치의 급격한 등락에 취약할 수 있습니다. </li>
-  <br><br> 
-  <li> <img src={{ url}} alt="Chart" height="500" width="700" align="left"> </li>
+  <br>
+  <li> <img src={{ url}} alt="Chart" height="500" width="800" align="left"> </li>
 </ul>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>><br><br><br>><br><br><br>
 </div> 
+{% endif %}
+
+{% if codelist %}
+<table class="table no-wrap" style="color:white;font-size:18px;">
+  <thead>
+    <tr> <p><b><h4>최고샤프지수 포트폴리오 </h4></p></tr>
+      <tr>
+        {% for key in max_sharpe_dict.keys():%}
+          <th class="border-top-0">{{key}}</th>
+          {% endfor %}
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+        {% for value in max_sharpe_dict.values():  %}
+        <td>{{value}}%</td>
+        {% endfor %}
+      </tr>
+  
+  </tbody>
+</table>
+
+{% endif %}
 
 
+{% if codelist %}
+<table class="table no-wrap" style="color:white;font-size:18px;">
+  <thead>
+    <tr> <p><b><h4> 최저리스크 포트폴리오</h4> </p></tr>
+      <tr>
+        {% for key in min_risk_dict.keys():%}
+          <th class="border-top-0">{{key}}</th>
+          {% endfor %}
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+        {% for value in min_risk_dict.values():  %}
+        <td>{{value}}%</td>
+        {% endfor %}
+      </tr>
+  
+  </tbody>
+</table>
 
+{% endif %}
+
+
+{% if codelist %}
+<div class="fig" name= 'fig' id= 'fig'> 
+ <img src={{ url2}} alt="Chart2" height="500" width="600" align="left" hspace=20> 
+ <img src={{ url3}} alt="Chart3" height="500" width="600" align="left" hspace=20> 
+
+
+</div> 
+{% endif %}
 
 
 </body> 

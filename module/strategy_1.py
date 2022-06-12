@@ -87,6 +87,58 @@ def strategy_1_result():
     plt.title("Portfolio Optimizaiton",fontsize= 30) 
     plt.xlabel('Risk', fontsize= 30) 
     plt.ylabel('Expected Returns',fontsize= 30) 
-    plt.savefig('static/img/MPT.png')
+    plt.savefig('static/img/strategy1_mpt.png')
     
-    return render_template('strategy_1.html', name='mpt',url='/static/img/MPT.png')
+ 
+    
+    min_ris= min_risk.mul(100)
+    min_risk= round(min_ris,2) 
+    min_risk=min_risk.reset_index(drop=True)
+    min_risk_columns_list= min_risk.columns.tolist()
+    min_risk_columns_values_list= min_risk.values.tolist()
+    min_risk_columns_values_list = sum(min_risk_columns_values_list, [])
+    min_risk_dict= {} 
+    for i in range(len(min_risk_columns_list)):
+        min_risk_dict[min_risk_columns_list[i]]= min_risk_columns_values_list[i] 
+
+    max_sharp= max_sharpe.mul(100)
+    max_sharpe= round(max_sharp,2) 
+    max_sharpe=max_sharpe.reset_index(drop=True)
+    max_sharpe_columns_list= max_sharpe.columns.tolist()
+    max_sharpe_columns_values_list= max_sharpe.values.tolist()
+    max_sharpe_columns_values_list = sum(max_sharpe_columns_values_list, [])
+    max_sharpe_dict= {} 
+    for i in range(len(max_sharpe_columns_list)):
+        max_sharpe_dict[max_sharpe_columns_list[i]]= max_sharpe_columns_values_list[i] 
+
+    ##PIE CHART
+    frequency = min_risk_columns_values_list[3:]
+    labels = min_risk_columns_list[3:]
+    fig = plt.figure(figsize=(8,8)) 
+    fig.set_facecolor('white') 
+    ax = fig.add_subplot() 
+    ax.pie(x=frequency,labels=labels,autopct=lambda p : '{:.2f}%'.format(p),
+        wedgeprops = {'edgecolor':'k','linestyle':'-','linewidth':2}
+        ) 
+    plt.legend() 
+    plt.title('Minimum Risk Portfolio', fontsize= 20)
+    plt.savefig('static/img/strategy1_minrisk.png')
+
+    frequency = max_sharpe_columns_values_list[3:]
+    labels = max_sharpe_columns_list[3:]
+    fig = plt.figure(figsize=(8,8)) 
+    fig.set_facecolor('white')
+    ax = fig.add_subplot()
+    ax.pie(x=frequency,labels=labels,autopct=lambda p : '{:.2f}%'.format(p),
+        wedgeprops = {'edgecolor':'k','linestyle':'-','linewidth':2}
+        ) 
+    plt.legend() 
+    plt.title('Maximum Sharpe Portfolio', fontsize= 20)
+    plt.savefig('static/img/strategy1_maxsharpe.png')
+    
+    
+    return render_template('strategy_1.html',
+                            min_risk_dict= min_risk_dict,                           
+                            max_sharpe_dict=max_sharpe_dict,
+                            codelist= codelist,name='mpt',url='/static/img/strategy1_mpt.png', 
+                            url2='/static/img/strategy1_minrisk.png', url3= '/static/img/strategy1_maxsharpe.png')
