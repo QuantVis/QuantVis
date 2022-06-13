@@ -7,6 +7,7 @@ from module.user_login import user_login     #** 해당 파일에서 적용한 �
 from module.strategy_1 import strategy_1
 from module.portfolio import port
 from module.pattern import pat
+from module.analysis import anal
 
 # App config
 app = Flask(__name__)
@@ -14,6 +15,7 @@ app.register_blueprint(user_login)  #** 블루프린트 적용
 app.register_blueprint(strategy_1)
 app.register_blueprint(port)
 app.register_blueprint(pat)
+app.register_blueprint(anal)
 
 # Session config
 app.secret_key = os.urandom(24)

@@ -19,11 +19,13 @@ pat = Blueprint('pattern', __name__, url_prefix='/pattern')
 @pat.route('/', methods=['GET', 'POST'])
 def index():
     if request.method == 'GET':
+        flash('정보를 모두 입력해주세요.')
         return render_template('pattern.html')
     else:
         code = request.form['code']
         startdate = request.form['startdate']
         enddate = request.form['enddate']
+        print(code, startdate, enddate)
         if request.form['action'] == '패턴검색':
             return redirect(url_for('pattern.pattern_re', startdate=startdate, enddate=enddate, code=code))
         elif request.form['action'] == '차트확인':

@@ -1,0 +1,65 @@
+{% extends 'layout.html' %}
+{% block head %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
+    </script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
+    </script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+    <script type="text/javascript"
+    src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/js/tempusdominus-bootstrap-4.min.js">
+    </script>
+    <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/css/tempusdominus-bootstrap-4.min.css" />
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.css" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-V2ST7N3ZY3"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+    gtag('js', new Date());
+
+    gtag('config', 'G-V2ST7N3ZY3');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5548835221228418"
+    crossorigin="anonymous"></script>
+{% endblock %}
+
+{% block content %}
+<div class="white-box">
+    <div class="row mt-3 mb-3">
+        <a href="{{ url_for('analysis.index')}}" class="btn btn-success">처음으로</a>
+    </div>
+    <div class="row mb-3">
+        <div class='col-md-3'>
+            <h3>종목코드: {{code}}</h3>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class='col-md-3'>
+            <p>기준일 : <b>{{startdate}} ~ {{day}}</b></p>
+        </div>
+    </div>
+    <p class="text-left">설정한 기간의 평균회귀선 결과입니다.</p>
+    <ul class="text-left">
+        <li class="text-letf">평균회귀선 대비 최고 수익률은 <b>{{max}} %</b>의 수익률을 보였습니다.</li>
+        <li class="text-left">평균회귀선 대비 최저 수익률은 <b>{{min}} %</b>의 수익률을 보였습니다.</li>
+        {% if today > 0%}
+        <li class="text-left">오늘 주가는 평균회귀선 대비 <b>{{today}} %</b> 상승하였습니다.
+        {% else %}
+        <li class="text-letf">오늘 주가는 평균회귀선 대비 <b>{{today}} %</b> 하락하였습니다.
+        {% endif %}
+    </ul>
+    <div class="row">
+        <img src="{{ url_for('analysis.plot', code=code, startdate=startdate) }}" class="img-fluid"
+        alt = "Responsive image" />
+    </div>
+
+</div>
+<script>
+</script>
+{% endblock %}

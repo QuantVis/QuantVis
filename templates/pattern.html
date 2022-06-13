@@ -1,9 +1,6 @@
 {% extends 'layout.html' %}
 {% block head %}
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
     integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
     </script>
@@ -55,6 +52,7 @@
 {% endblock %}
 
 {% block content %}
+<div class="white-box">
     <div id="loading"></div>
         <h2 class="mt-3">주식 패턴 검색기</h2>
         <p class="text-left mt-3"><b>종목 코드</b>를 입력해 주세요. 종목 코드를 모르신다면 <b><a
@@ -70,7 +68,7 @@
                     <input type="text" class="form-control" placeholder="종목코드 입력" aria-label="Username" value="{{code}}"
                         aria-describedby="basic-addon1" name="code">
                     {% else %}
-                    <input type="text" class="form-control" placeholder="종목코드 입력" aria-label="Username" value="035720"
+                    <input type="text" class="form-control" placeholder="종목코드 입력 (ex 삼성전자 : 005930)" aria-label="Username" 
                         aria-describedby="basic-addon1" name="code">
                     {% endif %}
                 </div>
@@ -87,7 +85,7 @@
                                     data-target="#datetimepicker1" value="{{startdate}}" name="startdate">
                                 {% else %}
                                 <input type="text" class="form-control datetimepicker-input"
-                                    data-target="#datetimepicker1" value="2021-09-10" name="startdate">
+                                    data-target="#datetimepicker1" name="startdate" placeholder="날짜 선택">
                                 {% endif %}
                                 <div class="input-group-append" data-target="#datetimepicker1"
                                     data-toggle="datetimepicker">
@@ -97,7 +95,7 @@
                         </div>
                     </div>
                     <div class='col-md-3'>
-                        <div class="form-group">
+                        <div class="form-group mb-3">
                             <label for="exampleFormControlSelect1">종료일</label>
                             <div class="input-group date" id="datetimepicker2" data-target-input="nearest">
                                 {% if enddate %}
@@ -106,7 +104,7 @@
 
                                 {% else %}
                                 <input type="text" class="form-control datetimepicker-input"
-                                    data-target="#datetimepicker2" value="2021-10-01" name="enddate">
+                                    data-target="#datetimepicker2" placeholder="날짜 선택" name="enddate">
                                 {% endif %}
 
                                 <div class="input-group-append" data-target="#datetimepicker2"
@@ -119,7 +117,7 @@
                 </div>
                 {% if chart %}
                 <img src="{{ url_for('pattern.plot_chart', code=code, startdate=startdate, enddate=enddate) }}"
-                    class="img-fluid" alt="Responsive image" />
+                    class="img-fluid" alt="종목 코드와 날짜를 확인해주세요." />
                 {% endif %}
             </div>
             <div class="form-group mb-3">
@@ -131,7 +129,7 @@
             </div>
             <div id="loadingcontainer"></div>
         </form>
-
+    </div>
 
 <script>
     $(function () {
@@ -149,7 +147,6 @@
         $("#datetimepicker2").on("change.datetimepicker", function (e) {
             $('#datetimepicker1').datetimepicker('maxDate', e.date);
         });
-        Kakao.init("59b5bdc754eaf8aea2e4c6471b2f29cf");
     });
 
     function LoadingWithMask() {
@@ -190,13 +187,6 @@
     function closeLoadingWithMask() {
         $('#mask, #loadingImg').hide();
         $('#mask, #loadingImg').remove();
-    }
-
-    function sendLinkCustom() {
-
-        Kakao.Link.sendCustom({
-            templateId: 62893
-        });
     }
 </script>
 {% endblock %}
