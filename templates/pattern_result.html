@@ -1,0 +1,96 @@
+{% extends 'layout.html' %}
+{% block head %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
+    </script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
+    </script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+    <script type="text/javascript"
+    src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/js/tempusdominus-bootstrap-4.min.js">
+    </script>
+    <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/css/tempusdominus-bootstrap-4.min.css" />
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.css" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-V2ST7N3ZY3"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+    gtag('js', new Date());
+
+    gtag('config', 'G-V2ST7N3ZY3');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5548835221228418"
+    crossorigin="anonymous"></script>
+{% endblock %}
+
+{% block content %}
+        <!-- 이 block은 이미 컨테이너 내부에 포함된 상태! 
+						(<div class="container-xxl" style="margin-left:17rem;"></div>)-->
+
+                        <div class="row mt-3 mb-3">
+                            <a href="{{ url_for('pattern.index')}}" class="btn btn-success">처음으로</a>
+                        </div>
+                        <div class="row mb-3">
+                            <div class='col-md-3'>
+                                <h3>종목코드: {{code}}</h3>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class='col-md-3'>
+                                <p>기준일 : <b>{{startdate}} ~ {{enddate}}</b></p>
+                            </div>
+                        </div>
+                        {% if noresult %}
+                        <p class="text-left">죄송합니다ㅠㅠ</p>
+                        <p class="text-left">검색하신 기간에는 유사 패턴을 찾을 수 없습니다.</p>
+                        {% else %}
+                        <p class="text-left">유사도 <b>98%</b>이상 패턴 검색에 대한 결과입니다.</p>
+                        <p class="text-left">총 <b>{{size}}</b>개의 유사 패턴이 검출 되었습니다.</p>
+                        <ul class="text-left">
+                            <li class="text-left">최저 수익률은 <b>{{min}} %</b>의 수익률을 보였습니다.</li>
+                            <li class="text-left">최고 수익률은 <b>{{max}} %</b>의 수익률을 보였습니다.</li>
+                            <li class="text-left">평균 수익률은 <b>{{avg}} %</b>의 수익률을 보였습니다.</li>
+                        </ul>
+                        <p class="text-left">유사도가 가장 높았던 패턴의 추세입니다.</p>
+                        <div class="row">
+                            <img src="{{ url_for('pattern.plot_png', code=code, startdate=startdate, enddate=enddate) }}" class="img-fluid"
+                                alt="Responsive image" />
+                
+                            <ul>
+                                <li class="text-left"><b>base</b>는 기준일의 주가 패턴을 나타냅니다</li>
+                                <li class="text-left"><b>target</b>은 기준일과 가장 유사한 패턴의 결과를 보여줍니다 (향후 <b>5일</b>간)</li>
+                            </ul>
+                        </div>
+                        {% endif %}
+                
+                    </div>
+<script>
+    //**block 내에 javascript 삽입**
+</script>
+{% endblock %}
+
+
+<!--
+1. 본인 페이지만을 위한 짜잘한 css는 html 태그 안에 style 속성으로 직접 입력하거나, 본인만을 위한 css 파일을 만들기 
+            ( ex. login.css, index.css ... )
+
+2. <span> 태그에 class로 글씨색 변경 -> text-success : 초록색, text-danger : 빨간색, text-purple : 검정에 가까운 보라색, text-info : 하늘색
+
+3. *** white-box 클래스로 레이아웃 잡을 때 주의 !!!!!!! ***
+현재 style.css에 white-box 클래스 배경색은 #363636으로 어두운 배경색임 !! 
+레이아웃 구성까지만 박스가 보이게 하고싶다면 style.css에서 일단 다른색으로 바꿔놓고, 
+레이아웃 다 잡은 다음에 배경색 다시 바꿔주면 됨~
+-->
