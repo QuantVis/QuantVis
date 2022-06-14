@@ -48,9 +48,17 @@ gtag('config', 'G-V2ST7N3ZY3');
 </script>
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5548835221228418"
 crossorigin="anonymous"></script>
+{% with messages = get_flashed_messages() %}
+    {% if messages %}
+        <script>
+            alert("{{messages[-1]}}")
+        </script>
+    {% endif %}
+{% endwith %}
 {% endblock %}
 
 {% block content %}
+<div class="white-box">
 <h2 class="mt-3">평균 회귀선</h2>
 <p class="text-left mt-3"><b>종목 코드</b>를 입력해 주세요. 종목 코드를 모르신다면 <b><a
             href="https://www.ktb.co.kr/trading/popup/itemPop.jspx" target="_blank">여기</a></b>에서 검색해 주세요.</p>
@@ -65,10 +73,10 @@ crossorigin="anonymous"></script>
             </div>
             {% if code %}
             <input type="text" class="form-control" placeholder="종목코드 입력" aria-label="Username" value="{{code}}"
-                aria-describedby="basic-addon1" name="code">
+                aria-describedby="basic-addon1" name="code", id="code">
             {% else %}
             <input type="text" class="form-control" placeholder="종목코드 입력" aria-label="Username" value=""
-                aria-describedby="basic-addon1" name="code">
+                aria-describedby="basic-addon1" name="code" id="code">
             {% endif %}
         </div>
     </div>
@@ -81,10 +89,10 @@ crossorigin="anonymous"></script>
                     <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
                         {% if startdate %}
                         <input type="text" class="form-control datetimepicker-input"
-                            data-target="#datetimepicker1" value="{{startdate}}" name="startdate">
+                            data-target="#datetimepicker1" value="{{startdate}}" name="startdate" id="startdate">
                         {% else %}
                         <input type="text" class="form-control datetimepicker-input"
-                            data-target="#datetimepicker1" placeholder="날짜를 입력하세요. (ex xxxx-xx-xx)" name="startdate">
+                            data-target="#datetimepicker1" placeholder="날짜를 입력하세요. (ex xxxx-xx-xx)" name="startdate" id="startdate">
                         {% endif %}
                         <div class="input-group-append" data-target="#datetimepicker1"
                             data-toggle="datetimepicker">
@@ -102,7 +110,7 @@ crossorigin="anonymous"></script>
     <div id="loadingcontainer"></div>
 </form>
 
-
+</div>
 <script>
     $(function () {
     $('#datetimepicker1').datetimepicker({
@@ -155,10 +163,13 @@ crossorigin="anonymous"></script>
     //로딩중 이미지 표시
     $('#loadingImg').show();
     }
+    }
 
     function closeLoadingWithMask() {
     $('#mask, #loadingImg').hide();
     $('#mask, #loadingImg').remove();
     }
+
+    
 </script>
 {% endblock %}

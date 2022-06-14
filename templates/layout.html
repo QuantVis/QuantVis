@@ -65,10 +65,17 @@
               </ul>
             </div>
 
-            <a href="#" class="nav__link">
+            <div href="#" class="nav__link dropdown collaps">
               <ion-icon name="pie-chart-outline" class="nav__icon"></ion-icon>
               <span class="nav_name">Analytics</span>
-            </a>
+              <ion-icon name="chevron-down-outline" class="collaps__link"></ion-icon>
+              <ul class="collaps__menu">
+                <!--블루프린트명.함수-->
+                <li> <a href="{{ url_for('pattern.index') }}" class="collaps__sublink">주가 패턴 분석</a></li>
+                <li> <a href="{{ url_for('analysis.index')}}" class="collaps__sublink">평균회귀분석</a></li>
+                <li> <a href="#" class="collaps__sublink"></a></li>
+              </ul>
+            </div>
 
             <div href="#" class="nav__link collaps">
               <ion-icon name="people-outline" class="nav__icon"></ion-icon>

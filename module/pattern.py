@@ -19,17 +19,19 @@ pat = Blueprint('pattern', __name__, url_prefix='/pattern')
 @pat.route('/', methods=['GET', 'POST'])
 def index():
     if request.method == 'GET':
-        flash('정보를 모두 입력해주세요.')
         return render_template('pattern.html')
     else:
         code = request.form['code']
         startdate = request.form['startdate']
         enddate = request.form['enddate']
-        print(code, startdate, enddate)
-        if request.form['action'] == '패턴검색':
-            return redirect(url_for('pattern.pattern_re', startdate=startdate, enddate=enddate, code=code))
-        elif request.form['action'] == '차트확인':
-            return render_template('pattern.html', startdate=startdate, enddate=enddate, code=code, chart=True)
+        if not(code and startdate and enddate):
+            flash('정보를 모두 입력해주세요.')
+            return render_template('pattern.html')
+        else:
+            if request.form['action'] == '패턴검색':
+                return redirect(url_for('pattern.pattern_re', startdate=startdate, enddate=enddate, code=code))
+            elif request.form['action'] == '차트확인':
+                return render_template('pattern.html', startdate=startdate, enddate=enddate, code=code, chart=True)
 
 @pat.route('/plot.png', methods=['GET'])
 def plot_png():
@@ -59,7 +61,8 @@ def plot_chart():
     axes = []
     axes.append(plt.subplot(gs[0]))
     axes.append(plt.subplot(gs[1], sharex=axes[0]))
-    axes[0].get_xaxis().set_visible(False)
+    axes[0].set_title('차트')
+    axes[0].get_xaxis().set_visible(False)  
 
     print(code)
     data = fdr.DataReader(code)
@@ -74,6 +77,7 @@ def plot_chart():
     candlestick_ohlc(axes[0], dohlc, width=0.5, colorup='r', colordown='b')
 
     # 거래량 차트
+    axes[1].set_title('거래량')
     axes[1].bar(x, data_['Volume'], color='grey', width=0.6, align='center')
     axes[1].set_xticks(range(len(x)))
     axes[1].set_xticklabels(list(data_.index.strftime('%Y-%m-%d')), rotation=90)

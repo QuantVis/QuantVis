@@ -49,6 +49,13 @@
     </script>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5548835221228418"
     crossorigin="anonymous"></script>
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+        <script>
+            alert("{{messages[-1]}}")
+        </script>
+    {% endif %}
+{% endwith %}
 {% endblock %}
 
 {% block content %}
@@ -116,8 +123,10 @@
                     </div>
                 </div>
                 {% if chart %}
-                <img src="{{ url_for('pattern.plot_chart', code=code, startdate=startdate, enddate=enddate) }}"
-                    class="img-fluid" alt="종목 코드와 날짜를 확인해주세요." />
+                <div class="form-group mb-3">
+                    <img src="{{ url_for('pattern.plot_chart', code=code, startdate=startdate, enddate=enddate) }}"
+                        class="img-fluid" alt="종목 코드와 날짜를 확인해주세요." />
+                </div>
                 {% endif %}
             </div>
             <div class="form-group mb-3">

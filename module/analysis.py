@@ -28,6 +28,9 @@ def index():
     else:
         code = request.form['code']
         startdate = request.form['startdate']
+        if not (code and startdate):
+            flash('정보를 모두 입력해주세요.')
+            return render_template('analysis.html')
         if request.form['action'] == '분석':
             return redirect(url_for('analysis.result', code = code, startdate=startdate))
 @anal.route('/plot_png', methods=['GET'])        
@@ -78,7 +81,12 @@ def plot():
     return send_file(img, mimetype='image/png')
 
     
-    
+@anal.errorhandler(403)
+@anal.errorhandler(404)
+@anal.errorhandler(410)
+@anal.errorhandler(500)
+def page_not_found(e):
+    return render_template('error.html')    
         
 @anal.route('/result', methods=['GET','POST'])
 def result():
@@ -96,7 +104,7 @@ def result():
     max_ = max(dpc)
     today_ = dpc[len(dpc)-1]
     
-    if code == '' | startdate == '':
+    if not(code and startdate):
         return render_template('analysis_result.html', noresult=1)
     else: 
         return render_template('analysis_result.html', code=code, startdate=startdate, min=round(min_,2), max=round(max_,2), today=round(today_,2), day=x)
