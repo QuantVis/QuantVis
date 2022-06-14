@@ -8,6 +8,7 @@ from module.strategy_1 import strategy_1
 from module.portfolio import port
 from module.pattern import pat
 from module.analysis import anal
+from module.chart import *
 
 # App config
 app = Flask(__name__)
@@ -16,6 +17,7 @@ app.register_blueprint(strategy_1)
 app.register_blueprint(port)
 app.register_blueprint(pat)
 app.register_blueprint(anal)
+app.register_blueprint(chart)
 
 # Session config
 app.secret_key = os.urandom(24)
