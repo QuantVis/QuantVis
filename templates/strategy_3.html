@@ -1,0 +1,123 @@
+{% extends 'layout.html' %}
+{% block head %}
+<!-- CSS -->
+<link rel="stylesheet" href="/static/css/styles.css">
+<style>
+  body {
+    background-color: #363636;
+    padding: 0rem 0 0 6.75rem;
+  }
+
+  fig { 
+
+    display : block
+  }
+
+
+</style>
+{% endblock %}
+{% block content%}
+<body> 
+
+
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+  <h2 style="color:white;font-size:18px;">Joel Greenblatt(1957) 조엘 그린블라트 투자이론 기반의 필터링 전략</h1>
+</div>
+
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+ <p style="color:white;font-size:18px;">위 필터링 조건의 저자 조엘 그린블라트는 1985년부터 2005년까지 약 20년간 연간 40%의 
+  수익률을 기록한 고담캐피털의 설립자 및 경영 파트너입니다. 현재 2019년 기준으로 Gotham 운용사는 5.6조달러 규모의 펀드를 
+  운용하고 있습니다. <br> 
+  그린블라트가 강조한 투자지표의 근거는 다음과 같습니다. 
+  <ul> 
+  <li> -시가총액 50,000,000달러 이상의 기업(우량자산의 효과)</li> 
+  <li> -유틸리티, 금융기업 제외 (배당수익률, 저 PER기업이 아닌 꾸준한 이익성장을 보여주는 기업선호) </li> 
+  <li> -ADR (미국상장의 해외기업 제외, 미국 본토기업 선호)</li> 
+  </ul>
+<br> 
+  <ul> 
+    <li> -자본수익률(ROIC): 영업활동에 사용되는 고정자산, 회사의 단기유동성(매출채권,현금) 대비 얼마나 많은 실적을
+      달성하였는지 백분율로 측정합니다.  
+    </li> 
+    <li> -이익수익률(Earnings Yield): EV(기업가치) 대비 얼마나 많은 EBIT(순이익)을 달성하였는지 백분율로 측정합니다. </li> 
+    </ul>
+
+    <ul> 
+      <p> Greenblatt가 강조한 지표의 활용방안은 다음과 같습니다.</p>
+      <li> 1. 20-30위권 회사를 2-3종목씩 달마다 사모아 1년에 걸쳐서 매수한다. </li> 
+      <li> 2. 일년마다 포트폴리오를 리발란싱하고 1년이 지난 시점에 Loser들을 매도한다. </li> 
+      <li> 3. 위 전략을 5-10년에 걸쳐 반복한다 </li> 
+      </ul>
+</p> 
+</div>
+
+<label for="basic-url" class="form-label" style="color:white;font-size:18px;">데이터 입력</label>
+<form id= "mptform" method="POST" action="strategy_1_result"> 
+<div class="input-group mb-3">
+  <span class="input-group-text" id="basic-addon3" >종목코드</span>
+  <input type="text" class="form-control" id="codelist" name="codelist" aria-describedby="basic-addon3" placeholder="AAPL,005930(국내,미국주식/종목사이에 콤마입력)">
+</div>
+
+<div class="input-group mb-3">
+  <span class="input-group-text" id="basic-addon3" >기간입력</span>
+  <input type="text" class="form-control" id="startdate" name="startdate" aria-describedby="basic-addon3" placeholder="20200520">
+  <span class="input-group-text">-</span>
+  <input type="text" class="form-control" id="enddate" name="enddate" aria-describedby="basic-addon3" placeholder="20220520"><br>
+</div>
+<button class="submit-btn">제출</button>
+</form> 
+
+
+<br>
+
+{% if codelist %}
+<div class="fig" name= 'fig' id= 'fig'> 
+  <p style="color:white;font-size:18px;">*이것만은 알아두세요!</p> 
+<ul style="color:white;font-size:18px;" >
+  <li >-입력한 기간동안 변동성을 기반하기 때문에 참고하고자하는 기간이 명확하다면 더욱 좋습니다 (Ex.장기,2008년 금융위기 이후, 2015년 긴축발작 전후 등). 
+  </li> 
+  <li>-과거 변동성을 기반으로 산출되기 때문에 향후 회사가치의 급격한 등락에 취약할 수 있습니다. </li>
+  <br>
+  <li> <img src={{ url}} alt="Chart" height="500" width="800" align="left"> </li>
+</ul>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>><br><br><br>><br><br><br>
+</div> 
+{% endif %}
+
+{% if codelist %}
+<table class="table no-wrap" style="color:white;font-size:18px;">
+  <thead>
+    <tr> <p><b><h4> 최저리스크 포트폴리오</h4> </p></tr>
+      <tr>
+        {% for key in min_risk_dict.keys():%}
+          <th class="border-top-0">{{key}}</th>
+          {% endfor %}
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+        {% for value in min_risk_dict.values():  %}
+        <td>{{value}}%</td>
+        {% endfor %}
+      </tr>
+  
+  </tbody>
+</table>
+
+{% endif %}
+
+
+{% if codelist %}
+<div class="fig" name= 'fig' id= 'fig'> 
+ <img src={{ url2}} alt="Chart2" height="500" width="600" align="left" hspace=20> 
+ <img src={{ url3}} alt="Chart3" height="500" width="600" align="left" hspace=20> 
+
+
+</div> 
+{% endif %}
+
+
+</body> 
+
+
+{% endblock %}

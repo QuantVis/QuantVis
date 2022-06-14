@@ -1,0 +1,116 @@
+{% extends 'layout.html' %}
+{% block head %}
+<!-- CSS -->
+<link rel="stylesheet" href="/static/css/styles.css">
+<style>
+  body {
+    background-color: #363636;
+    padding: 0rem 0 0 6.75rem;
+  }
+
+  fig { 
+
+    display : block
+  }
+
+
+</style>
+{% endblock %}
+{% block content%}
+<body> 
+
+
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+  <h2 style="color:white;font-size:18px;">William J. O'Neil(1933) 윌리엄 오닐 성장주 투자 필터링 전략</h1>
+</div>
+
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+ <p style="color:white;font-size:18px;">위 필터링 조건의 윌리엄 오닐은 증권중개인, 거래소, 증권데이터 및 주식분석 창업경력을 
+  바탕으로 데이터에 기반한 CAN SLIM 전략을 그의 저서 'Make Money in Stocks: A Winning System In Good Times or Bad'에서 소개하였습니다. 
+  전략의 목표는 시세의 큰 상승이 있기 전에 퀄리티 성장주 주식을 빠르게 선별하는데 그 목적을 두고 있습니다.  
+  
+
+  <ul> 
+  <li> -C(Current quarterly earnings): 최근 분기매출이 25%이상 성장했고 특히 최근에 매출상향이 두드러지는 경우 </li> 
+  <li> -A(Annual earnings growth): 3개년 이익이 25%이상, ROE(자본수익률)가 25%를 상회하는 경우</li> 
+  <li> -N(New Product or service): 기술발전과 서비스, 상품 혁명을 주도하는 경우(정성적 평가) </li> 
+  <li> -S(Supply and Demand): 최근 주가상승과 함께 거래량 상승이 두드러지는 경우(기술적 분석)</li> 
+  <li> -L(Leader or laggard): 해당 산업분야에서 산업을 리드하고 있는 기업, 최근 1년간 SNP500의 수익률을 상회하는 경우</li> 
+  <li> -I(Institutional sponsorship): 최근 뮤추얼펀드, 은행, 대형기관의 지분소유 여부 </li> 
+  <li> -M(Market Direction): 지수의 꾸준한 상향이 기대되는 상승장일 경우(거시적 관점) </li> 
+  </ul>
+
+ 
+</p> 
+</div>
+
+<label for="basic-url" class="form-label" style="color:white;font-size:18px;">데이터 입력</label>
+<form id= "mptform" method="POST" action="strategy_1_result"> 
+<div class="input-group mb-3">
+  <span class="input-group-text" id="basic-addon3" >종목코드</span>
+  <input type="text" class="form-control" id="codelist" name="codelist" aria-describedby="basic-addon3" placeholder="AAPL,005930(국내,미국주식/종목사이에 콤마입력)">
+</div>
+
+<div class="input-group mb-3">
+  <span class="input-group-text" id="basic-addon3" >기간입력</span>
+  <input type="text" class="form-control" id="startdate" name="startdate" aria-describedby="basic-addon3" placeholder="20200520">
+  <span class="input-group-text">-</span>
+  <input type="text" class="form-control" id="enddate" name="enddate" aria-describedby="basic-addon3" placeholder="20220520"><br>
+</div>
+<button class="submit-btn">제출</button>
+</form> 
+
+
+<br>
+
+{% if codelist %}
+<div class="fig" name= 'fig' id= 'fig'> 
+  <p style="color:white;font-size:18px;">*이것만은 알아두세요!</p> 
+<ul style="color:white;font-size:18px;" >
+  <li >-입력한 기간동안 변동성을 기반하기 때문에 참고하고자하는 기간이 명확하다면 더욱 좋습니다 (Ex.장기,2008년 금융위기 이후, 2015년 긴축발작 전후 등). 
+  </li> 
+  <li>-과거 변동성을 기반으로 산출되기 때문에 향후 회사가치의 급격한 등락에 취약할 수 있습니다. </li>
+  <br>
+  <li> <img src={{ url}} alt="Chart" height="500" width="800" align="left"> </li>
+</ul>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>><br><br><br>><br><br><br>
+</div> 
+{% endif %}
+
+{% if codelist %}
+<table class="table no-wrap" style="color:white;font-size:18px;">
+  <thead>
+    <tr> <p><b><h4> 최저리스크 포트폴리오</h4> </p></tr>
+      <tr>
+        {% for key in min_risk_dict.keys():%}
+          <th class="border-top-0">{{key}}</th>
+          {% endfor %}
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+        {% for value in min_risk_dict.values():  %}
+        <td>{{value}}%</td>
+        {% endfor %}
+      </tr>
+  
+  </tbody>
+</table>
+
+{% endif %}
+
+
+{% if codelist %}
+<div class="fig" name= 'fig' id= 'fig'> 
+ <img src={{ url2}} alt="Chart2" height="500" width="600" align="left" hspace=20> 
+ <img src={{ url3}} alt="Chart3" height="500" width="600" align="left" hspace=20> 
+
+
+</div> 
+{% endif %}
+
+
+</body> 
+
+
+{% endblock %}
