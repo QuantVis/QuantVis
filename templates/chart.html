@@ -1,0 +1,226 @@
+{% extends 'layout.html' %}
+{% block head %}
+<style>
+  body {
+    background-color: #f5f5f5;
+    color : #000;
+  }
+</style>
+<title>국내 차트</title>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+  google.charts.load('current', {packages:['corechart', 'table', 'gauge', 'controls']});
+  google.charts.setOnLoadCallback(drawChartRangeFilter);
+  var dateAlpha = new Date({{a}}[{{a}}.length-1][0]-1, {{a}}[{{a}}.length-1][1]-1, {{a}}[{{a}}.length-1][2])
+  var dateOmega = new Date({{a}}[{{a}}.length-1][0], {{a}}[{{a}}.length-1][1]-1, {{a}}[{{a}}.length-1][2])
+  let list = [];
+  let list2 = [['Date', 'Volume']];
+  let list3 = [['Date', 'Close', 'ema130']];
+  let list4 = [['Date', 'macdhist', 'macd', 'signal']];
+  let list5 = [['Date', '%k', '%d']];
+  var high = 0;
+  // a-date, b-low, c-open, d-close, e-high, f-volume
+      for (let i = 0; i < {{a}}.length; i ++) {
+        let tmp = {{a}}[i];
+        var date = new Date(tmp[0], tmp[1]-1, tmp[2]);
+        var low = {{b}}[i];
+        var open = {{c}}[i];
+        var close = {{d}}[i];
+        var high2 = {{e}}[i];
+        if (low == 0) {
+          low = close;
+        }
+        if (open == 0){
+          open = close;
+        }
+        if (high2 == 0){
+          high2 = close;
+        } 
+        if (high < high2) {
+          high = high2;
+        }
+        let lst = [date, low, open, close, high2];
+        if (i > {{a}}.length - 365) {
+          let lst2 = [date, {{f}}[i]];
+          let lst3 = [date, close, {{ma130}}[i]];
+          let lst4 = [date, {{macdhist}}[i], {{macd}}[i], {{signal}}[i]];
+          let lst5 = [date, {{fastk}}[i], {{slowd}}[i]];
+          list2.push(lst2);
+          list3.push(lst3);
+          list4.push(lst4);
+          list5.push(lst5);
+        }
+        list.push(lst);
+      }
+  alert(new date(12, 0, 0))
+  function drawChartRangeFilter() {
+  
+    var dashboard = new google.visualization.Dashboard(document.getElementById('chartRangeFilter_dashboard_div'));
+    var control = new google.visualization.ControlWrapper({
+      'controlType': 'ChartRangeFilter',
+      'containerId': 'OHLC_chart_control_div',
+      'options': {
+          // Filter by the date axis.
+          'filterColumnIndex': 0,
+          'ui': {
+          'chartType': 'LineChart',
+          'chartOptions': {
+               'chartArea': {'width': '90%'},
+               'hAxis': {'baselineColor': 'none'}
+           },
+          // Display a single series that shows the closing value of the stock.
+          // Thus, this view has two columns: the date (axis) and the stock value (line series).
+          'chartView': {
+              'columns': [0, 3]
+          },
+          // 1 day in milliseconds = 24 * 60 * 60 * 1000 = 86,400,000
+          'minRangeSize': 86400000
+          }
+        },
+      'state': {'range': {'start': dateAlpha, 'end': dateOmega}
+      }
+      });
+
+      var chart1 = new google.visualization.ChartWrapper({
+      'chartType': 'CandlestickChart',
+      'containerId': 'OHLC_chart_div',
+      'options': {
+          // Use the same chart area width as the control for axis alignment.
+          'chartArea': {'height': '80%', 'width': '90%'},
+          'hAxis': {'slantedText': false},
+          'vAxis': {'viewWindow': {'min': 0, 'max': high + 10000}
+          },
+          'legend': {'position': 'none'},
+          'candlestick': {
+            'fallingColor': { 'strokeWidth': 0, 'fill': '#a52714' }, // red
+            'risingColor': { 'strokeWidth': 0, 'fill': '#0f9d58' }   // green
+          },
+          'fontSize' : 11
+        },
+      // Convert the first column from 'date' to 'string'.
+      'view': {
+          'columns': [
+          {
+              'calc': function(dataTable, rowIndex) {
+              return dataTable.getFormattedValue(rowIndex, 0);
+              },
+              'type': 'string'
+          }, 1, 2, 3, 4]
+        }
+      });
+    
+    
+    var data = new google.visualization.DataTable();
+    data.addColumn('date', 'Date');
+    data.addColumn('number', 'Stock low');
+    data.addColumn('number', 'Stock open');
+    data.addColumn('number', 'Stock close');
+    data.addColumn('number', 'Stock high');
+    
+
+    for (var i = 0; i < list.length; i++) {
+      data.addRow(list[i]);
+    }
+    dashboard.bind(control, chart1);
+    dashboard.draw(data);
+  }
+</script>
+{% endblock %}
+{% block title %}chart{% endblock %}
+{% block content%}
+<br>
+<div style= "width: 100%; height: 150px;">
+  <form action="/chart/search" method ="get">
+    <input type = "text" name = "stockName" placeholder="주식명 or 종목코드 입력">
+    <input type = "submit" value = "검색">
+  </form>
+  <br>
+    <h3> {{company}} </h3><hr>
+</div>
+<div>
+  <div>
+    <div id="chartRangeFilter_dashboard_div" style= "width: 100%; height: 660px;">
+      <div id="OHLC_chart_div" style="width: 100%; height: 550px;"></div>
+      <div id="OHLC_chart_control_div" style="width: 100%; height: 50px;"></div>
+    </div>
+    <hr>
+    <div>
+      <h4>거래량</h4>
+      <div id="Volume_chart_div" style="width: 100%; height: 100px;"></div>
+      <script>
+        google.charts.load('current', {packages:['corechart']});
+        google.charts.setOnLoadCallback(drawChart);
+        function drawChart() {
+          var data = google.visualization.arrayToDataTable(list2);
+          var options = {
+            legend: { position: 'in'},
+          };
+          var chart = new google.visualization.LineChart(document.getElementById('Volume_chart_div'));
+          chart.draw(data, options);
+        }
+      </script>
+    </div>
+    <hr>
+    <div>
+      <h4>참고 지표</h4>
+      <div id="ma130_chart_div" style="width: 100%; height: 150px;"></div>
+      <script>
+        google.charts.load('current', {packages:['corechart']});
+        google.charts.setOnLoadCallback(drawChart);
+        function drawChart() {
+          var data = google.visualization.arrayToDataTable(list3);
+          var options = {
+            title: 'EMA130',
+            legend: { position: 'in'},
+          };
+          var chart = new google.visualization.LineChart(document.getElementById('ma130_chart_div'));
+          chart.draw(data, options);
+        }
+      </script>
+      <div id="macd_chart_div" style="width: 100%; height: 150px;"></div>
+      <script>
+        google.charts.load('current', {packages:['corechart']});
+        google.charts.setOnLoadCallback(drawChart);
+        function drawChart() {
+          var data = google.visualization.arrayToDataTable(list4);
+          var options = {
+            title: 'MACD',
+            legend: { position: 'in'}
+          };
+          var chart = new google.visualization.LineChart(document.getElementById('macd_chart_div'));
+          chart.draw(data, options);
+        }
+      </script>
+      <div id="market_wave_chart_div" style="width: 100%; height: 150px;"></div>
+      <script>
+        google.charts.load('current', {packages:['corechart']});
+        google.charts.setOnLoadCallback(drawChart);
+        function drawChart() {
+          var data = google.visualization.arrayToDataTable(list5);
+          var options = {
+            title: 'Stochastic',
+            legend: { position: 'in'}
+          };
+          var chart = new google.visualization.LineChart(document.getElementById('market_wave_chart_div'));
+          chart.draw(data, options);
+        }
+      </script>
+    </div>
+    <hr>
+    <div style="width: 100%; height: 300px;">
+      <h4>insight</h4>
+      알랙산더 엘더가 개발한 삼중창 매매 시스템은 추세 추종과 역추세 매매법을
+      함께 사용하며, 세 단계의 창을 거쳐 더 정확한 매매 시점을 찾도록 구성되어
+      있습니다.<br>
+      130 이동 지수평균이 상승하고 %D가 20 아래로 떨어질 때 매수 신호<br>
+      130 이동 지수평균이 하락하고 %D가 80 위로 올라갈 때 매도 신호<br>
+      <b>현 {{company}} 주가는 {{insight}}상태 입니다.</b>
+      <hr>
+      * 시계열 데이터만으로 분석한 결과입니다. 투자 결과에 관한 책임은 투자자의 몫입니다.<br>
+      * 주식이 오르기 시작하는 시점을 찾아내는 것은 어렵습니다. 중요한 것은
+      주가가 오른 만큼 수익을 내는 것보다,
+      자신의 전략대로 매매를 했을 때 어느 정도의 승률로 수익을 낼 수 있느냐는 것입니다.<br>
+    </div>
+  </div>
+</div>
+{% endblock %}

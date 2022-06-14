@@ -28,6 +28,18 @@
               <ion-icon name="home-outline" class="nav__icon"></ion-icon>
               <span class="nav_name">Dashboard</span>
             </a>
+
+            <div href="#" class="nav__link dropdown collaps">
+              <ion-icon name="bar-chart-outline" class="nav__icon"></ion-icon>
+              <span class="nav_name">Chart</span>
+              <ion-icon name="chevron-down-outline" class="collaps__link"></ion-icon>
+
+              <ul class="collaps__menu">
+                <li><a href="{{url_for('chart.getChart')}}" class="collaps__sublink">국내 주식 차트</a></li>
+                <li><a href="{{url_for('chart.getChartA')}}" class="collaps__sublink">해외 주식 차트</a></li>
+              </ul>
+            </div>
+
             <div href="#" class="nav__link dropdown collaps">
               <ion-icon name="bulb-outline" class="nav__icon"></ion-icon>
               <span class="nav_name">Strategies</span>
@@ -54,32 +66,14 @@
             </div>
 
             <div href="#" class="nav__link dropdown collaps">
-              <ion-icon name="folder-outline" class="nav__icon"></ion-icon>
-              <span class="nav_name">Projects</span>
-              <ion-icon name="chevron-down-outline" class="collaps__link"></ion-icon>
-
-              <ul class="collaps__menu">
-                <a href="#" class="collaps__sublink">Data</a>
-                <a href="#" class="collaps__sublink">Group</a>
-                <a href="#" class="collaps__sublink">Members</a>
-              </ul>
-            </div>
-
-            <a href="#" class="nav__link">
               <ion-icon name="pie-chart-outline" class="nav__icon"></ion-icon>
               <span class="nav_name">Analytics</span>
-            </a>
-
-            <div href="#" class="nav__link collaps">
-              <ion-icon name="people-outline" class="nav__icon"></ion-icon>
-              <span class="nav_name">Team</span>
-
               <ion-icon name="chevron-down-outline" class="collaps__link"></ion-icon>
-
               <ul class="collaps__menu">
-                <a href="#" class="collaps__sublink">Data</a>
-                <a href="#" class="collaps__sublink">Group</a>
-                <a href="#" class="collaps__sublink">Members</a>
+                <!--블루프린트명.함수-->
+                <li> <a href="{{ url_for('pattern.index') }}" class="collaps__sublink">주가 패턴 분석</a></li>
+                <li> <a href="{{ url_for('analysis.index')}}" class="collaps__sublink">평균회귀분석</a></li>
+                <li> <a href="#" class="collaps__sublink"></a></li>
               </ul>
             </div>
 
