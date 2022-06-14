@@ -21,52 +21,39 @@
 
 
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-  <h2 style="color:white;font-size:18px;">Joel Greenblatt(1957) 조엘 그린블라트 투자이론 기반의 필터링 전략</h1>
+  <h2 style="color:white;font-size:18px;">William J. O'Neil(1933) 윌리엄 오닐 성장주 투자 필터링 전략</h1>
 </div>
 
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
- <p style="color:white;font-size:18px;">위 필터링 조건의 저자 조엘 그린블라트는 1985년부터 2005년까지 약 20년간 연간 40%의 
-  수익률을 기록한 고담캐피털의 설립자 및 경영 파트너입니다. 현재 2019년 기준으로 Gotham 운용사는 5.6조달러 규모의 펀드를 
-  운용하고 있습니다. <br> 
-  그린블라트가 강조한 투자지표의 근거는 다음과 같습니다. 
-  <ul> 
-  <li> -시가총액 50,000,000달러 이상의 기업(우량자산의 효과)</li> 
-  <li> -유틸리티, 금융기업 제외 (배당수익률, 저 PER기업이 아닌 꾸준한 이익성장을 보여주는 기업선호) </li> 
-  <li> -ADR (미국상장의 해외기업 제외, 미국 본토기업 선호)</li> 
-  </ul>
-<br> 
-  <ul> 
-    <li> -자본수익률(ROIC): 영업활동에 사용되는 고정자산, 회사의 단기유동성(매출채권,현금) 대비 얼마나 많은 실적을
-      달성하였는지 백분율로 측정합니다.  
-    </li> 
-    <li> -이익수익률(Earnings Yield): EV(기업가치) 대비 얼마나 많은 EBIT(순이익)을 달성하였는지 백분율로 측정합니다. </li> 
+ <p style="color:white;font-size:18px;">위 필터링 조건의 윌리엄 오닐은 증권중개인, 거래소, 증권데이터 및 주식분석 창업경력을 
+  바탕으로 데이터에 기반한 CAN SLIM 전략을 그의 저서 'Make Money in Stocks: A Winning System In Good Times or Bad'에서 소개하였습니다. 
+  전략의 목표는 시세의 큰 상승이 있기 전에 퀄리티 성장주 주식을 빠르게 선별하는데 그 목적을 두고 있습니다.  
+ </p>
+</div> 
+
+
+
+  <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <ul style="color:white;font-size:17px;"> 
+    <p> 윌리엄 오닐이 강조한 투자지표의 기준은 다음과 같습니다.</p>
+    <li> -C(Current quarterly earnings): 최근 분기매출이 25%이상 성장했고 특히 최근에 매출상향이 두드러지는 경우 </li> 
+    <li> -A(Annual earnings growth): 3개년 이익이 25%이상, ROE(자본수익률)가 25%를 상회하는 경우</li> 
+    <li> -N(New Product or service): 기술발전과 서비스, 상품 혁명을 주도하는 경우(정성적 평가) </li> 
+    <li> -S(Supply and Demand): 최근 주가상승과 함께 거래량 상승이 두드러지는 경우(기술적 분석)</li> 
+    <li> -L(Leader or laggard): 해당 산업분야에서 산업을 리드하고 있는 기업, 최근 1년간 SNP500의 수익률을 상회하는 경우</li> 
+    <li> -I(Institutional sponsorship): 최근 뮤추얼펀드, 은행, 대형기관의 지분소유 여부 </li> 
+    <li> -M(Market Direction): 지수의 꾸준한 상향이 기대되는 상승장일 경우(거시적 관점) </li> 
     </ul>
+    <br> 
+  </div>
 
-    <ul> 
-      <p> Greenblatt가 강조한 지표의 활용방안은 다음과 같습니다.</p>
-      <li> 1. 20-30위권 회사를 2-3종목씩 달마다 사모아 1년에 걸쳐서 매수한다. </li> 
-      <li> 2. 일년마다 포트폴리오를 리발란싱하고 1년이 지난 시점에 Loser들을 매도한다. </li> 
-      <li> 3. 위 전략을 5-10년에 걸쳐 반복한다 </li> 
-      </ul>
-</p> 
-</div>
 
-<label for="basic-url" class="form-label" style="color:white;font-size:18px;">데이터 입력</label>
-<form id= "mptform" method="POST" action="strategy_1_result"> 
-<div class="input-group mb-3">
-  <span class="input-group-text" id="basic-addon3" >종목코드</span>
-  <input type="text" class="form-control" id="codelist" name="codelist" aria-describedby="basic-addon3" placeholder="AAPL,005930(국내,미국주식/종목사이에 콤마입력)">
-</div>
-
-<div class="input-group mb-3">
-  <span class="input-group-text" id="basic-addon3" >기간입력</span>
-  <input type="text" class="form-control" id="startdate" name="startdate" aria-describedby="basic-addon3" placeholder="20200520">
-  <span class="input-group-text">-</span>
-  <input type="text" class="form-control" id="enddate" name="enddate" aria-describedby="basic-addon3" placeholder="20220520"><br>
-</div>
-<button class="submit-btn">제출</button>
-</form> 
-
+  <label for="basic-url" class="form-label" style="color:white;font-size:17px;">QuantVis 분석요청</label>
+  <form id= "mptform" method="POST" action="strategy_3_result"> 
+    <input type="submit" class="form-control" id="execute" name="execute" value="분석결과확인">
+  </form> 
+  
+  <br>
 
 <br>
 

@@ -8,7 +8,8 @@ from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 import matplotlib
 import matplotlib.pyplot as plt
 import matplotlib.gridspec as gridspec
-from mpl_finance import candlestick_ohlc
+import mplfinance as mplfinance
+#from mpl_finance import candlestick_ohlc
 import numpy as np
 import FinanceDataReader as fdr
 
@@ -74,7 +75,7 @@ def plot_chart():
     dohlc = np.hstack((np.reshape(x, (-1, 1)), ohlc))
 
     # 봉차트
-    candlestick_ohlc(axes[0], dohlc, width=0.5, colorup='r', colordown='b')
+    mplfinance.candlestick_ohlc(axes[0], dohlc, width=0.5, colorup='r', colordown='b')
 
     # 거래량 차트
     axes[1].set_title('거래량')
