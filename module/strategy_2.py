@@ -29,7 +29,6 @@ def strategy_2_main(): #Function은 Blueprint 이름과 달라야함
 
 @strategy_2.route('/strategy_2_result', methods=['POST'])
 def strategy_2_result(): 
-    abc='abc'
     jg_result_ey, jg_result_roic = strategyy().getDB_STAT_2() 
     execute= request.form.get('execute')
     # print(execute)

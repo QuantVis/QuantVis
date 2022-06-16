@@ -1,6 +1,6 @@
 #플라스크, DB
 from flask import Flask, redirect, url_for, render_template, request, session, flash, Blueprint, current_app
-from DB.strategyDB_3 import strategy_3
+from DB.strategyDB_3 import strategyyy
 ##백엔드
 from pandas_datareader import data as pdr 
 import matplotlib
@@ -29,6 +29,15 @@ def strategy_3_main(): #Function은 Blueprint 이름과 달라야함
 
 @strategy_3.route('/strategy_3_result', methods=['POST'])
 def strategy_3_result(): 
+    william_og,williamquartereps,williamthreeyearearnings,williamthreeyearroe,williamoneyearprofit  = strategyyy().getDB_STAT_3() 
+    execute= request.form.get('execute')
+ 
     
-    return render_template('strategy_3.html'
+    return render_template('strategy_3.html',
+                           william_og_tables=[william_og.to_html(classes='data', header="true")],
+                           williamquartereps_tables=[williamquartereps.to_html(classes='data', header="true")],
+                           williamthreeyearearnings_tables=[williamthreeyearearnings.to_html(classes='data', header="true")],
+                           williamthreeyearroe_tables=[williamthreeyearroe.to_html(classes='data', header="true")],
+                           williamoneyearprofit_tables=[williamoneyearprofit.to_html(classes='data', header="true")],
+                          execute= execute 
                     )
