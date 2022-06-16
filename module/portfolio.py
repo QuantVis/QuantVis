@@ -251,7 +251,6 @@ def portfolio_result() :
                 get_chart(df_data=df_data_K,company=K_stock['company'][i])
                 print('chart_idx : ',chart_idx)
                 plt.savefig(f'static/img/chart_{chart_idx}.png')
-                time.sleep(1)
                 chart_idx += 1
                 
         else: 
@@ -279,7 +278,6 @@ def portfolio_result() :
                 get_chart(df_data=df_data_F,company=F_stock['company'][i])
                 print('chart_idx : ',chart_idx)
                 plt.savefig(f'static/img/chart_{chart_idx}.png')
-                time.sleep(1)
                 chart_idx += 1
     print('chart_idx_final : ',chart_idx)
     
