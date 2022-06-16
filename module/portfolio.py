@@ -11,7 +11,7 @@ from pandas_datareader import data as pdr
 import pandas as pd
 import io
 import matplotlib.ticker as ticker
-from mpl_finance import candlestick2_ohlc
+import mplfinance as mplfinance
 from DB.portfolioDB import Portfolio
 from DB.quantvis import Quantvis
 import re,time
@@ -191,7 +191,7 @@ def portfolio_result() :
         #mid_axes.plot(idx, df_data['전일기준등락율'], label='전일대비등락율', color='green', linewidth=1)
 
         # 캔들차트 그리기
-        candlestick2_ohlc(top_axes, df_data['Open'], df_data['High'], df_data['Low'], df_data['Close'], width=0.5, colorup='r', colordown='b')
+        mplfinance.candlestick2_ohlc(top_axes, df_data['Open'], df_data['High'], df_data['Low'], df_data['Close'], width=0.5, colorup='r', colordown='b')
 
         #------------------------------------------------------------------------------#
         # 색깔 구분을 위한 함수

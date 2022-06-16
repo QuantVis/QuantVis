@@ -31,7 +31,16 @@ def strategy_3_main(): #Function은 Blueprint 이름과 달라야함
 def strategy_3_result(): 
     william_og,williamquartereps,williamthreeyearearnings,williamthreeyearroe,williamoneyearprofit  = strategyyy().getDB_STAT_3() 
     execute= request.form.get('execute')
- 
+    codeli= request.form.get('codelist') #html -> 리스트객체로 receive   
+    codelis= codeli.replace(" ","") #리스트의 공백제거 
+    codelist= codelis.split(',')
+    
+    for code in codelist:
+        
+        
+        
+        
+        
     
     return render_template('strategy_3.html',
                            william_og_tables=[william_og.to_html(classes='data', header="true")],
