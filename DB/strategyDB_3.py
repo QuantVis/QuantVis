@@ -1,15 +1,13 @@
 import pymysql
 import pandas as pd
 
-
-
-class strategy():       
+class strategy_3():       
     def __init__(self):
         self.config = {
                 'host':'127.0.0.1',
                 'user':'quantvis',
                 'password':'quantvis',
-                'database':'quantvis',
+                'database':'quantvis_strategy_2',
                 'port':3306,
                 'charset':'utf8',
                 'use_unicode':True
