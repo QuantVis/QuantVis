@@ -49,3 +49,19 @@ class Quantvis():
             cursor.close()
             conn.close()
     
+    # 최근가격 가져오기
+    def select_price(self,table):
+        try:
+            conn = pymysql.connect(**self.config)
+            cursor = conn.cursor()
+            sql = f"SELECT close FROM `{table}` WHERE date = (SELECT MAX(date) FROM `{table}`)"
+            cursor.execute(sql)                
+            res = cursor.fetchone()
+            if not res : return " "
+            return res[0]
+        except Exception as e:
+            print("DB연동 에러 : ", e)
+        finally:
+            cursor.close()
+            conn.close()
+    
