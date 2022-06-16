@@ -113,20 +113,13 @@ crossorigin="anonymous"></script>
 </div>
 <script>
     $(function () {
-    $('#datetimepicker1').datetimepicker({
-        format: 'YYYY-MM-DD',
-        useCurrent: false
-    });
-    $('#datetimepicker2').datetimepicker({
-        format: 'YYYY-MM-DD',
-        useCurrent: false
-    });
-    $("#datetimepicker1").on("change.datetimepicker", function (e) {
-        $('#datetimepicker2').datetimepicker('minDate', e.date);
-    });
-    $("#datetimepicker2").on("change.datetimepicker", function (e) {
-        $('#datetimepicker1').datetimepicker('maxDate', e.date);
-    });
+        $('#datetimepicker1').datetimepicker({
+            format: 'YYYY-MM-DD',
+            useCurrent: false
+        });
+        $("#datetimepicker1").on("change.datetimepicker", function (e) {
+            $('#datetimepicker2').datetimepicker('minDate', e.date);
+        });
     });
 
     function LoadingWithMask() {
@@ -162,7 +155,6 @@ crossorigin="anonymous"></script>
 
     //로딩중 이미지 표시
     $('#loadingImg').show();
-    }
     }
 
     function closeLoadingWithMask() {
