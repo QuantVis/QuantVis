@@ -8,7 +8,7 @@ from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 import matplotlib
 import matplotlib.pyplot as plt
 import matplotlib.gridspec as gridspec
-import mplfinance as mplfinance
+import mpl_finance as mplfinance
 #from mpl_finance import candlestick_ohlc
 import numpy as np
 import FinanceDataReader as fdr
@@ -63,7 +63,7 @@ def plot_chart():
     axes.append(plt.subplot(gs[0]))
     axes.append(plt.subplot(gs[1], sharex=axes[0]))
     axes[0].set_title('차트')
-    axes[0].get_xaxis().set_visible(False)  
+    axes[0].get_xaxis().set_visible(False) 
 
     print(code)
     data = fdr.DataReader(code)

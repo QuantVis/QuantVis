@@ -1,69 +1,94 @@
 {% extends 'layout.html' %}
+{% block head %}
+  <style>
+    a {
+      color:black;
+    }
+  </style>
+{% endblock %}
 {% block content %}
-<body style="background-color:#363636;">
-<div>
-  <div align="center" style="width:1200px;  margin-top:15px;">
-    <h2 style="color:white;">{{res[0][1]}}</h2>
-    <hr style="color:white;">
-  </div>
-  <div align="center" style="width:1000px; text-align:center; margin-left:100px;">
-    <table class="table table-light border border-light border-3 table table-striped">
-        <thead class="table-light">
-          <tr>
-            <th scope="col">No.</th>
-            <th scope="col" style="text-align:center;">회사이름</th>
-            <th scope="col" style="text-align:center;">종목코드</th>
-            <th scope="col" style="text-align:center;">주문상태</th>
-            <th scope="col" style="text-align:center;">주식수</th>
-            <th scope="col" style="text-align:center;">입력한 가격</th>
-            <th scope="col" style="text-align:center;">전일대비 등락률(%)</th>
-          </tr>
-        </thead>
-        <tbody id="portfolio" class="tbody table-light">
-            {% for re in range(res| length)%}
-          <tr>
-            <th>{{re+1}}</th>
-            <td style="text-align:center;"><strong>{{res[re][2]}}</strong></td>
-            <td style="text-align:center;">{{res[re][3]}}</td>
-            <td style="text-align:center;">{{res[re][4]}}</td>
-            <td style="text-align:center;" class="stock">{{res[re][5]}}</td>
-            <td class="text-danger" style="text-align:right;">{{res[re][6]}}</td>
-            <td style="text-align:center;">{{res[re][7]}}</td>
-          </tr>
-          {% endfor %}
-        </tbody>
-        <tfoot class="table-light">
-          <tr>
-            <th colspan="2" style="text-align:center;">합계</th>
-            <th>구매한 총 주식수</th>
-            <th colspan="2" class="text-danger" style="font-weight: bold; text-align: center;">총 투자금액</th>
-            <th colspan="2" style="text-align:right;">전일 대비 예상 손익금</th>
-          </tr>
-          <tr>
-            <td colspan="2"></td>
-            <td style="font-weight: bold; font-size:small;">{{total}}&nbsp;Stocks</td>
-            <td>
-              <select class="form-select form-select-sm btn-outline-dark" aria-label="Default select example" type="text" id="money">
-                <option value="한화">한화(원)</option>
-                <option value="달러">달러($)</option>
-              </select> 
-            </td>
-            <td style="font-weight: bold; font-size:small;"><span id="total_price">{{K_total_price_fi}}(원)</span></td>
-            <td colspan="2" style="text-align:right; font-weight: bold;" id="predict"></td>
-          </tr>
-        </tfoot>
-      </table>
-    <div align="right">
-      <button class="btn btn-sm btn-outline-light" onclick='location.href="{{url_for("home")}}"'>홈으로</button>
-      <button class="btn btn-sm btn-outline-light" onclick='location.href="{{url_for("portfolio.portfolio")}}"'>새로 작성하기</button>
-      <button class="btn btn-sm btn-outline-light" onclick='location.href="{{url_for("portfolio.portfolio_list")}}"'>포트폴리오 목록</button>
+  <body style="background-color:#363636;">
+    <div align="center" style="width:1200px;  margin-top:15px;">
+      <h2 style="color:white;">{{res[0][1]}}</h2>
+      <hr style="color:white;">
     </div>
-  </div>
-</div>
-<script type=text/javascript>
-  var F_total_price_fi={{F_total_price_fi|tojson}}
-  var K_total_price_fi={{K_total_price_fi|tojson}}
-</script>
-<script src="/static/js/portfolio.js"></script>
-</body>
+    <div align="center" style="width:1000px; text-align:center; margin-left:100px;">
+      <table class="table table-light border border-light border-3 table table-striped">
+          <thead class="table-light">
+            <tr>
+              <th scope="col">No.</th>
+              <th scope="col" style="text-align:center;">회사이름</th>
+              <th scope="col" style="text-align:center;">종목코드</th>
+              <th scope="col" style="text-align:center;">주문상태</th>
+              <th scope="col" style="text-align:center;">주식수</th>
+              <th scope="col" style="text-align:center;">입력한 가격</th>
+              <th scope="col" style="text-align:center;">전일대비 등락률(%)</th>
+            </tr>
+          </thead>
+          <tbody id="portfolio" class="tbody table-light">
+              {% for re in range(res| length)%}
+            <tr>
+              <th>{{re+1}}</th>
+              <td style="text-align:center;"><a href="/chart/search?stockName={{res[re][3].upper()}}"><strong>{{res[re][2]}}</strong></a></td>
+              <td style="text-align:center;"><a href="/chart/search?stockName={{res[re][3].upper()}}">{{res[re][3].upper()}}</a></td>
+              <td style="text-align:center;">{{res[re][4]}}</td>
+              <td style="text-align:center;" class="stock">{{res[re][5]}}</td>
+              <td class="text-danger" style="text-align:right;">{{res[re][6]}}</td>
+              <td style="text-align:center;" class="{% if (change[re] | string)[0] == '-'%} text-danger {% else %} text-primary {% endif %}">{{change[re]}}</td>
+            </tr>
+            <tr>
+              <td colspan="7"><h6>최근 30일 기준 차트(OHLC,DD,MDD)</h6><img src="{{url_for('static', filename='img/chart_'+((re+1)|string)+'.png')}}" width="800px" height="200px"/></td>
+            </tr>
+            {% endfor %}
+          </tbody>
+          <tfoot class="table-light">
+            <tr>
+              <th colspan="2" style="text-align:center;">합계</th>
+              <th>구매한 총 주식수</th>
+              <th colspan="2" class="text-danger" style="font-weight: bold; text-align: center;">총 투자금액</th>
+              <th colspan="2" style="text-align:right;">전일 대비 예상 손익금</th>
+            </tr>
+            <tr>
+              <td colspan="2"></td>
+              <td style="font-weight: bold; font-size:small;">{{total}}&nbsp;Stocks</td>
+              <td>
+                <select class="form-select form-select-sm btn-outline-dark" aria-label="Default select example" type="text" id="money">
+                  <option value="한화">한화(원)</option>
+                  <option value="달러">달러($)</option>
+                </select> 
+              </td>
+              <td style="font-weight: bold; font-size:small;"><span id="total_price">{{K_total_price_fi}}(원)</span></td>
+              <td colspan="2" style="text-align:right; font-weight: bold;" class={% if (K_total_change_price_fi | string)[0] == '-'%} text-danger {% else %} text-primary {% endif %}><span id="total_chg_price">{{K_total_change_price_fi}}(원)</span></td>
+            </tr>
+          </tfoot>
+        </table>
+      <div align="right">
+        <button class="btn btn-sm btn-outline-light" onclick='location.href="{{url_for("home")}}"'>홈으로</button>
+        <button class="btn btn-sm btn-outline-light" onclick='location.href="{{url_for("portfolio.portfolio")}}"'>새로 작성하기</button>
+        <button class="btn btn-sm btn-outline-light" onclick='location.href="{{url_for("portfolio.portfolio_list")}}"'>포트폴리오 목록</button>
+      </div>
+    </div>
+  </body>
+  <script type=text/javascript>
+    var F_total_price_fi={{F_total_price_fi|tojson}}
+    var K_total_price_fi={{K_total_price_fi|tojson}}
+    var K_total_chg_price_fi = {{K_total_change_price_fi|tojson}}
+    var F_total_chg_price_fi = {{F_total_change_price_fi|tojson}}
+    
+//최종 가격 한화나 달러로 변환
+var money_select = document.querySelector('#money')
+money_select.onchange=function(){
+  if(money_select.value=="한화"){
+    console.log('한화!')
+    document.querySelector('#total_price').innerHTML=K_total_price_fi+'(원)';
+    document.querySelector('#total_chg_price').innerHTML=K_total_chg_price_fi+'(원)';
+  } 
+  else if(money_select.value=="달러"){
+    console.log('달러!')
+    document.querySelector("#total_price").innerHTML=F_total_price_fi+'($)';
+    document.querySelector("#total_chg_price").innerHTML=F_total_chg_price_fi+'($)';
+  }
+}
+  </script>
+  <script src="/static/js/portfolio.js"></script>
 {% endblock %}
