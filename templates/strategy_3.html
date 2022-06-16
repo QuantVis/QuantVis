@@ -73,13 +73,6 @@
     <br> 
   </div>
 
-  <label for="basic-url" class="form-label" style="color:white;font-size:18px;">잠깐, I(Institutional Ownership) 기관편입 분석을 위해 종목코드를 입력해주세요!</label>
-  <form id= "codelist" method="POST" action="strategy_3_result"> 
-  <div class="input-group mb-3">
-    <span class="input-group-text" id="basic-addon3" >종목코드</span>
-    <input type="text" class="form-control" id="codelist" name="codelist" aria-describedby="basic-addon3" placeholder="AAPL,GOOG,TSLA(최대 3개까지 입력)">
-  </div>
-
   <label for="basic-url" class="form-label" style="color:white;font-size:17px;">QuantVis 분석요청</label>
   <form id= "williamform" method="POST" action="strategy_3_result"> 
     <input type="submit" class="form-control" id="execute" name="execute" value="분석결과확인">
@@ -88,13 +81,12 @@
 
 <br>
 {% if execute %}
-<p style="color:white;font-size:17px;"><b>C(분기EPS), A(연간순이익증가율), L(지수수익률비교)
-  *참고: 가장 최근 분기 및 연간 실적을 바탕으로 업데이트됩니다. 
-</h4></p>
+<p style="color:white;font-size:18px;"><b>C(분기EPS), A(연간순이익증가율), L(지수수익률비교)</p>
+  <p style="color:white;font-size:13px;"> *참고: 가장 최근 분기 및 연간 실적을 바탕으로 업데이트됩니다.</p> 
 {% endif %}
 
 {% if execute %}
-<p style="color:white;font-size:17px;"><h4><b>TOP5 기준분기 EPS성장률</h4></p>
+<p style="color:white;font-size:15px;">TOP5 기준분기 EPS성장률</p>
 {% for table in williamquartereps_tables %}
 {{ table|safe }}
 {% endfor %}
@@ -102,40 +94,100 @@
 <br> 
 
 {% if execute %}
-<p style="color:white;font-size:17px;"><h4><b>TOP5 3년순이익성장률</h4></p>
+<p style="color:white;font-size:15px;">TOP5 3년순이익성장률</p>
 {% for table in williamthreeyearearnings_tables %}
 {{ table|safe }}
 {% endfor %}
 {% endif %}
 
 {% if execute %}
-<p style="color:white;font-size:17px;"><h4><b>TOP5 3년평균ROE</h4></p>
+<p style="color:white;font-size:15px;">TOP5 3년평균ROE</p>
 {% for table in williamthreeyearroe_tables %}
 {{ table|safe }}
 {% endfor %}
 {% endif %}
 
 {% if execute %}
-<p style="color:white;font-size:17px;"><h4><b>TOP5 지수대비 1년수익률</h4></p>
+<p style="color:white;font-size:15px;">TOP5 지수대비 1년수익률</p>
 {% for table in williamoneyearprofit_tables %}
 {{ table|safe }}
 {% endfor %}
 {% endif %}
 
 
-{% if codelist %}
-<p style="color:white;font-size:17px;"><b>I(Institutional) 기관보유 및 최근물량변동 
+{% if execute %}
+<p style="color:white;font-size:18px;"><b>I(Institutional) 기관보유 및 최근물량변동 
 </p>
 {% endif %}
 
 
+{% if execute %}
+<label for="basic-url" class="form-label" style="color:white;font-size:15px;">잠깐!  I(Institutional Ownership) 기관편입 분석을 위해 종목코드를 입력해주세요!</label>
+<form id= "codelist" method="POST" action="strategy_3_resultwinstitution"> 
+<div class="input-group mb-3" width="400">
+  <span class="input-group-text" id="basic-addon3" width="400" >종목코드</span>
+  <input type="text" class="form-control" id="codelist" name="codelist" aria-describedby="basic-addon3" placeholder="종목코드입력(1개씩)" width="400">
+  <button class="submit-btn">제출</button>
+</div>
+</form>
+{% endif %}
+{% if codelist %}
+<p style="color:white;font-size:13px;"><h4><b>보유기관현황</h4></p>
+  <p style="color:white;font-size:10px;"><h6>-전체기관비중: {{totalpercent}} </h6></p>
+  <p style="color:white;font-size:10px;"><h6>-기준분기: {{quarter}}</h6></p>
+{% for table in df_tables %}
+{{ table|safe }}
+{% endfor %}
+<br> 
+{% endif %}
+
+{% if codelist %}
+<div>
+  <p style="color:white;font-size:17px;">지분변동추이</p>
+  <hr> 
+ <ul> 
+ <li><img src={{ url1}} alt="Chart2" height="450" width="550" align="left" ></li> 
+ <li><img src={{ url2}} alt="Chart3" height="450" width="550" align="left" hspace=20> </li>
+ </ul> <br><br>  <br><br><br><br><br><br><br><br><br><br>
+ <br><br><br><br><br><br><br>
+</div> 
+{% endif %}
+<br> 
+{% if codelist %}
+<table class="table no-wrap" style="color:white;font-size:17px;">
+  <thead>
+    <tr> <p><b>손바뀜 추이</p></tr>
+      <tr>
+        {% for key in handchange_dict.keys(): %}
+          <th class="border-top-0">{{key}}</th>
+          {% endfor %}
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+        {% for value in handchange_dict.values():  %}
+        <td>{{value}}</td>
+        {% endfor %}
+      </tr>
+  
+  </tbody>
+</table>
+
+{% endif %}
+
+<br><br>
+{% if codelist %}
+<p style="color:white;font-size:18px;"><b>S(Supply and Demand) 기술적분석 및 모멘텀 확인 </p>
+  <hr>
+<a href="{{url_for('chart.getChartA')}}" title="">
+  <img src="/static/img/technicalanalysis.jpg" height="30" width="30" />
+		퀀트비스가 제공하는 차트분석으로 바로가기
+	</a>
+{% endif %}
 
 
 
-
-
-
-
+<br><br><br><br><br>
 </body> 
 
 
