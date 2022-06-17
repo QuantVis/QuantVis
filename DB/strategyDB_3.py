@@ -1,42 +1,53 @@
 import pymysql
 import pandas as pd
 
-class strategy_3():       
+class strategyyy():       
     def __init__(self):
         self.config = {
                 'host':'127.0.0.1',
                 'user':'quantvis',
                 'password':'quantvis',
-                'database':'quantvis_strategy_2',
+                'database':'quantvis_strategy_1',
                 'port':3306,
                 'charset':'utf8',
                 'use_unicode':True
             }   
-    def getDB_STAT_1(self, stock_cod,start_date,end_date):
+    def getDB_STAT_3(self):
         try:
             conn = pymysql.connect(**self.config)
             cursor = conn.cursor()
-            stock_code = stock_cod.replace("-","_")
-            sql = f"select * from `{stock_code}` where date >= {start_date} and date <={end_date}"
-            cursor.execute(sql)
-            rows = cursor.fetchall()
-            col = ['date', 'open', 'high', '안에서 함수호출low', 'close', 'volume', 'company', 'ticker']
-            result = pd.DataFrame(rows, columns=col)
-            result.reset_index(drop=True)
-            return result
-        
+            sql1 = f"select ticker, sector, quarterdate, concat(quarterepsgrowth,'%') as a, yeardate, concat(threeyearearningsgrowth,'%') as b, concat(threeyearroe,'%') as c, concat(oneyearprofit,'%') as d, concat(oneyearsnpprofit,'%') from william_result_roe_20220616"
+            sql2= f"select ticker, sector, quarterdate, concat(quarterepsgrowth,'%') as a, yeardate, concat(threeyearearningsgrowth,'%') as b, concat(threeyearroe,'%') as c, concat(oneyearprofit,'%') as d, concat(oneyearsnpprofit,'%') from william_result_roe_20220616 order by a desc limit 5"
+            sql3= f"select ticker, sector, quarterdate, concat(quarterepsgrowth,'%') as a, yeardate, concat(threeyearearningsgrowth,'%') as b, concat(threeyearroe,'%') as c, concat(oneyearprofit,'%') as d, concat(oneyearsnpprofit,'%') from william_result_roe_20220616 order by b desc limit 5"
+            sql4= f"select ticker, sector, quarterdate, concat(quarterepsgrowth,'%') as a, yeardate, concat(threeyearearningsgrowth,'%') as b, concat(threeyearroe,'%') as c, concat(oneyearprofit,'%') as d, concat(oneyearsnpprofit,'%') from william_result_roe_20220616 order by c desc limit 5"
+            sql5= f"select ticker, sector, quarterdate, concat(quarterepsgrowth,'%') as a, yeardate, concat(threeyearearningsgrowth,'%') as b, concat(threeyearroe,'%') as c, concat(oneyearprofit,'%') as d, concat(oneyearsnpprofit,'%') from william_result_roe_20220616 order by d desc limit 5"
+            cursor.execute(sql1)
+            rows1 = cursor.fetchall()
+            cursor.execute(sql2)
+            rows2 = cursor.fetchall()
+            cursor.execute(sql3)
+            rows3 = cursor.fetchall()
+            cursor.execute(sql4)
+            rows4 = cursor.fetchall()
+            cursor.execute(sql5)
+            rows5 = cursor.fetchall()
+            col = ['티커심볼','산업분류','기준분기','분기EPS성장률','기준연도','3년순이익성장률','3년평균ROE','1년수익률','1년지수수익률']
+            result1 = pd.DataFrame(rows1, columns=col)
+            result1.reset_index(drop=True)
+            result2 = pd.DataFrame(rows2, columns=col)
+            result2.reset_index(drop=True)
+            result3 = pd.DataFrame(rows3, columns=col)
+            result3.reset_index(drop=True)
+            result4 = pd.DataFrame(rows4, columns=col)
+            result4.reset_index(drop=True)
+            result5 = pd.DataFrame(rows5, columns=col)
+            result5.reset_index(drop=True)
+
+            return result1, result2, result3, result4, result5
+
         except Exception as e:
             print("DB연동 에러 : ", e)
             conn.rollback()
         finally:
             cursor.close()
             conn.close()
-    def getUSstock_close(self, ticker,start_date,end_date):
-        df_AAPL_close = self.getDB_STAT_1('AAPL', start_date,end_date)['date']
-        df = self.getDB_STAT_1(ticker, start_date,end_date)['close']
-        df_ticker_close= df.rename(ticker) 
-        df_ticker_date = self.getDB_STAT_1(ticker, start_date,end_date)['date']
-        df_ticker_close_date= pd.concat([df_ticker_date,df_ticker_close],axis=1)
-        result= pd.merge(df_AAPL_close,df_ticker_close_date,on='date', how='left')
-        result1= result.iloc[:,[1]]
-        return result1

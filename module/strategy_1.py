@@ -90,7 +90,6 @@ def strategy_1_result():
     plt.savefig('static/img/strategy1_mpt.png')
     
  
-    
     min_ris= min_risk.mul(100)
     min_risk= round(min_ris,2) 
     min_risk=min_risk.reset_index(drop=True)
