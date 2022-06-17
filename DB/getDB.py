@@ -11,8 +11,8 @@ class getDB:
     def GetStockData(self):
         config = {
             'host':'127.0.0.1',
-            'user':'scott',
-            'password':'tiger',
+            'user':'quantvis',
+            'password':'quantvis',
             'database':'quantvis',
             'port':3306,
             'charset':'utf8',
@@ -97,8 +97,8 @@ class getName:
     def GetStockName(self):
         config = {
         'host':'127.0.0.1',
-        'user':'scott',
-        'password':'tiger',
+        'user':'quantvis',
+        'password':'quantvis',
         'database':'quantvis',
         'port':3306,
         'charset':'utf8',
@@ -129,8 +129,8 @@ class getUSDB:
     def GetUSStockData(self):
         config = {
             'host':'127.0.0.1',
-            'user':'scott',
-            'password':'tiger',
+            'user':'quantvis',
+            'password':'quantvis',
             'database':'quantvis',
             'port':3306,
             'charset':'utf8',
