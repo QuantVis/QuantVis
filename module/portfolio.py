@@ -11,7 +11,7 @@ from pandas_datareader import data as pdr
 import pandas as pd
 import io
 import matplotlib.ticker as ticker
-import mplfinance as mplfinance
+import mpl_finance as mplfinance
 from DB.portfolioDB import Portfolio
 from DB.quantvis import Quantvis
 import re,time
@@ -192,7 +192,7 @@ def portfolio_result() :
 
         # 캔들차트 그리기
         mplfinance.candlestick2_ohlc(top_axes, df_data['Open'], df_data['High'], df_data['Low'], df_data['Close'], width=0.5, colorup='r', colordown='b')
-
+        
         #------------------------------------------------------------------------------#
         # 색깔 구분을 위한 함수
         color_fuc = lambda x : 'r' if x >= 0 else 'b'
