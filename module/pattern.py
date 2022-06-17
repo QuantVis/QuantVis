@@ -8,7 +8,7 @@ from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 import matplotlib
 import matplotlib.pyplot as plt
 import matplotlib.gridspec as gridspec
-import mplfinance as mplfinance
+import mpl_finance as mplfinance
 #from mpl_finance import candlestick_ohlc
 import numpy as np
 import FinanceDataReader as fdr
