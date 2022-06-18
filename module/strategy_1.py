@@ -1,6 +1,6 @@
 #플라스크, DB
 from flask import Flask, redirect, url_for, render_template, request, session, flash, Blueprint, current_app
-from DB.strategyDB import strategy
+from DB.strategyDB_1 import strategy
 ##백엔드
 from pandas_datareader import data as pdr 
 import matplotlib
@@ -90,7 +90,6 @@ def strategy_1_result():
     plt.savefig('static/img/strategy1_mpt.png')
     
  
-    
     min_ris= min_risk.mul(100)
     min_risk= round(min_ris,2) 
     min_risk=min_risk.reset_index(drop=True)

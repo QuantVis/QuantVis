@@ -1,0 +1,194 @@
+{% extends 'layout.html' %}
+{% block head %}
+<!-- CSS -->
+<link rel="stylesheet" href="/static/css/styles.css">
+<style>
+  body {
+    background-color: #363636;
+    padding: 0rem 0 0 6.75rem;
+  }
+
+  fig { 
+
+    display : block
+  }
+
+  table.dataframe {
+    border-collapse: collapse;
+    text-align: left;
+    line-height: 1.5;
+    border-top: 1px solid white;
+    border-bottom: 1px solid white;
+    margin: 20px 10px;
+  }
+  table.dataframe th {
+    text-align: left;
+    width: 150px;
+    padding: 10px;
+    font-weight: bold;
+    vertical-align: top;
+  }
+  table.dataframe td {
+    width: 350px;
+    padding: 10px;
+    vertical-align: top;
+  }
+  table.dataframe .even {
+    background: #fdf3f5;
+  }
+
+
+
+
+</style>
+{% endblock %}
+{% block content%}
+<body> 
+
+
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+  <h2 style="color:white;font-size:18px;">William J. O'Neil(1933) 윌리엄 오닐 성장주 투자 필터링 전략</h1>
+</div>
+
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+ <p style="color:white;font-size:18px;">위 필터링 조건의 윌리엄 오닐은 증권중개인, 거래소, 증권데이터 및 주식분석 창업경력을 
+  바탕으로 데이터에 기반한 CAN SLIM 전략을 그의 저서 'Make Money in Stocks: A Winning System In Good Times or Bad'에서 소개하였습니다. 
+  전략의 목표는 시세의 큰 상승이 있기 전에 퀄리티 성장주 주식을 빠르게 선별하는데 그 목적을 두고 있습니다.  
+ </p>
+</div> 
+
+
+
+  <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <ul style="color:white;font-size:17px;"> 
+    <p> 윌리엄 오닐이 강조한 투자지표의 기준은 다음과 같습니다.</p>
+    <li> -C(Current quarterly earnings): 최근 분기매출이 25%이상 성장했고 특히 최근에 매출상향이 두드러지는 경우 </li> 
+    <li> -A(Annual earnings growth): 3개년 이익이 25%이상, ROE(자본수익률)가 25%를 상회하는 경우</li> 
+    <li> -N(New Product or service): 기술발전과 서비스, 상품 혁명을 주도하는 경우(정성적 평가) </li> 
+    <li> -S(Supply and Demand): 최근 주가상승과 함께 거래량 상승이 두드러지는 경우(기술적 분석)</li> 
+    <li> -L(Leader or laggard): 해당 산업분야에서 산업을 리드하고 있는 기업, 최근 1년간 SNP500의 수익률을 상회하는 경우</li> 
+    <li> -I(Institutional sponsorship): 최근 뮤추얼펀드, 은행, 대형기관의 지분소유 여부 </li> 
+    <li> -M(Market Direction): 지수의 꾸준한 상향이 기대되는 상승장일 경우(거시적 관점) </li> 
+    </ul>
+    <br> 
+  </div>
+
+  <label for="basic-url" class="form-label" style="color:white;font-size:17px;">QuantVis 분석요청</label>
+  <form id= "williamform" method="POST" action="strategy_3_result"> 
+    <input type="submit" class="form-control" id="execute" name="execute" value="분석결과확인">
+  </form> 
+  
+
+<br>
+{% if execute %}
+<p style="color:white;font-size:18px;"><b>C(분기EPS), A(연간순이익증가율), L(지수수익률비교)</p>
+  <p style="color:white;font-size:13px;"> *참고: 가장 최근 분기 및 연간 실적을 바탕으로 업데이트됩니다.</p> 
+{% endif %}
+
+{% if execute %}
+<p style="color:white;font-size:15px;">TOP5 기준분기 EPS성장률</p>
+{% for table in williamquartereps_tables %}
+{{ table|safe }}
+{% endfor %}
+{% endif %}
+<br> 
+
+{% if execute %}
+<p style="color:white;font-size:15px;">TOP5 3년순이익성장률</p>
+{% for table in williamthreeyearearnings_tables %}
+{{ table|safe }}
+{% endfor %}
+{% endif %}
+
+{% if execute %}
+<p style="color:white;font-size:15px;">TOP5 3년평균ROE</p>
+{% for table in williamthreeyearroe_tables %}
+{{ table|safe }}
+{% endfor %}
+{% endif %}
+
+{% if execute %}
+<p style="color:white;font-size:15px;">TOP5 지수대비 1년수익률</p>
+{% for table in williamoneyearprofit_tables %}
+{{ table|safe }}
+{% endfor %}
+{% endif %}
+
+
+{% if execute %}
+<p style="color:white;font-size:18px;"><b>I(Institutional) 기관보유 및 최근물량변동 
+</p>
+{% endif %}
+
+
+{% if execute %}
+<label for="basic-url" class="form-label" style="color:white;font-size:15px;">잠깐!  I(Institutional Ownership) 기관편입 분석을 위해 종목코드를 입력해주세요!</label>
+<form id= "codelist" method="POST" action="strategy_3_resultwinstitution"> 
+<div class="input-group mb-3" width="400">
+  <span class="input-group-text" id="basic-addon3" width="400" >종목코드</span>
+  <input type="text" class="form-control" id="codelist" name="codelist" aria-describedby="basic-addon3" placeholder="종목코드입력(1개씩)" width="400">
+  <button class="submit-btn">제출</button>
+</div>
+</form>
+{% endif %}
+{% if codelist %}
+<p style="color:white;font-size:13px;"><h4><b>보유기관현황</h4></p>
+  <p style="color:white;font-size:10px;"><h6>-전체기관비중: {{totalpercent}} </h6></p>
+  <p style="color:white;font-size:10px;"><h6>-기준분기: {{quarter}}</h6></p>
+{% for table in df_tables %}
+{{ table|safe }}
+{% endfor %}
+<br> 
+{% endif %}
+
+{% if codelist %}
+<div>
+  <p style="color:white;font-size:17px;">지분변동추이</p>
+  <hr> 
+ <ul> 
+ <li><img src={{ url1}} alt="Chart2" height="450" width="550" align="left" ></li> 
+ <li><img src={{ url2}} alt="Chart3" height="450" width="550" align="left" hspace=20> </li>
+ </ul> <br><br>  <br><br><br><br><br><br><br><br><br><br>
+ <br><br><br><br><br><br><br>
+</div> 
+{% endif %}
+<br> 
+{% if codelist %}
+<table class="table no-wrap" style="color:white;font-size:17px;">
+  <thead>
+    <tr> <p><b>손바뀜 추이</p></tr>
+      <tr>
+        {% for key in handchange_dict.keys(): %}
+          <th class="border-top-0">{{key}}</th>
+          {% endfor %}
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+        {% for value in handchange_dict.values():  %}
+        <td>{{value}}</td>
+        {% endfor %}
+      </tr>
+  
+  </tbody>
+</table>
+
+{% endif %}
+
+<br><br>
+{% if codelist %}
+<p style="color:white;font-size:18px;"><b>S(Supply and Demand) 기술적분석 및 모멘텀 확인 </p>
+  <hr>
+<a href="{{url_for('chart.getChartA')}}" title="">
+  <img src="/static/img/technicalanalysis.jpg" height="30" width="30" />
+		퀀트비스가 제공하는 차트분석으로 바로가기
+	</a>
+{% endif %}
+
+
+
+<br><br><br><br><br>
+</body> 
+
+
+{% endblock %}

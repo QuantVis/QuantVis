@@ -1,5 +1,6 @@
 import pandas as pd
 import pymysql
+import numpy as np
 
 class getDB:
     stock_code = None
@@ -23,13 +24,13 @@ class getDB:
         try:
             conn = pymysql.connect(**config)
             cursor = conn.cursor()
-            #where date >= {self.date}
             sql = f"select * from {stock_code2}"
             cursor.execute(sql)
             rows = cursor.fetchall()
             col = ['date', 'open', 'high', 'low', 'close', 'volume', 'company', 'ticker']
             result = pd.DataFrame(rows, columns=col)
             result.reset_index(drop=True)
+            result = result.fillna(0.0)
             result['ema60'] = result.close.ewm(span=60).mean()
             result['ema130'] = result.close.ewm(span=130).mean()
             result['macd'] = result['ema60'] - result['ema130']
@@ -39,8 +40,9 @@ class getDB:
             result['ndays_low'] = result.low.rolling(window=14,min_periods=1).min()
             result['fast_k'] = (result['close'] - result['ndays_low'])/(result['ndays_high']-result['ndays_low']) * 100
             result['slow_d'] = result['fast_k'].rolling(window=3).mean()
+            result = result.replace([np.inf, -np.inf], np.nan)
             result = result.fillna(0.0)
-            # result = result.assign(fast_k=result['fast_k'], slow_d=result['slow_d']).dropna()
+
             a = []
             b = []
             c = []
@@ -143,6 +145,7 @@ class getUSDB:
             col = ['date', 'open', 'high', 'low', 'close', 'volume', 'company', 'ticker']
             result = pd.DataFrame(rows, columns=col)
             result.reset_index(drop=True)
+            result = result.fillna(0.0)
             result['ema60'] = result.close.ewm(span=60).mean()
             result['ema130'] = result.close.ewm(span=130).mean()
             result['macd'] = result['ema60'] - result['ema130']
@@ -152,8 +155,9 @@ class getUSDB:
             result['ndays_low'] = result.low.rolling(window=14,min_periods=1).min()
             result['fast_k'] = (result['close'] - result['ndays_low'])/(result['ndays_high']-result['ndays_low']) * 100
             result['slow_d'] = result['fast_k'].rolling(window=3).mean()
+            result = result.replace([np.inf, -np.inf], np.nan)
             result = result.fillna(0.0)
-            # result = result.assign(fast_k=result['fast_k'], slow_d=result['slow_d']).dropna()
+            
             a = []
             b = []
             c = []

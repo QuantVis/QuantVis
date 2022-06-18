@@ -1,8 +1,6 @@
 import pymysql
 import pandas as pd
 
-
-
 class strategy():       
     def __init__(self):
         self.config = {
@@ -22,7 +20,7 @@ class strategy():
             sql = f"select * from `{stock_code}` where date >= {start_date} and date <={end_date}"
             cursor.execute(sql)
             rows = cursor.fetchall()
-            col = ['date', 'open', 'high', '안에서 함수호출low', 'close', 'volume', 'company', 'ticker']
+            col = ['date', 'open', 'high', 'low', 'close', 'volume', 'company', 'ticker']
             result = pd.DataFrame(rows, columns=col)
             result.reset_index(drop=True)
             return result
@@ -33,6 +31,7 @@ class strategy():
         finally:
             cursor.close()
             conn.close()
+            
     def getUSstock_close(self, ticker,start_date,end_date):
         df_AAPL_close = self.getDB_STAT_1('AAPL', start_date,end_date)['date']
         df = self.getDB_STAT_1(ticker, start_date,end_date)['close']

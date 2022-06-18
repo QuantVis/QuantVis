@@ -1,0 +1,112 @@
+{% extends 'layout.html' %}
+{% block head %}
+<!-- CSS -->
+<link rel="stylesheet" href="/static/css/styles.css">
+<style>
+  body {
+    background-color: #363636;
+    padding: 0rem 0 0 6.75rem;
+  }
+
+  fig { 
+
+    display : block
+  }
+
+  table.dataframe {
+    border-collapse: collapse;
+    text-align: left;
+    line-height: 1.5;
+    border-top: 1px solid white;
+    border-bottom: 1px solid white;
+    margin: 20px 10px;
+  }
+  table.dataframe th {
+    text-align: left;
+    width: 150px;
+    padding: 10px;
+    font-weight: bold;
+    vertical-align: top;
+  }
+  table.dataframe td {
+    width: 350px;
+    padding: 10px;
+    vertical-align: top;
+  }
+  table.dataframe .even {
+    background: #fdf3f5;
+  }
+
+
+</style>
+{% endblock %}
+{% block content%}
+<body> 
+
+
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+  <h2 style="color:white;font-size:18px;">Joel Greenblatt(1957) 조엘 그린블라트 투자이론 기반의 필터링 전략</h1>
+</div>
+
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+ <p style="color:white;font-size:18px;">위 필터링 조건의 저자 조엘 그린블라트는 1985년부터 2005년까지 약 20년간 연간 40%의 
+  수익률을 기록한 고담캐피털의 설립자 및 경영 파트너입니다. 현재 2019년 기준으로 Gotham 운용사는 5.6조달러 규모의 펀드를 
+  운용하고 있습니다.  
+
+
+</p> 
+</div>
+
+
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+  <ul style="color:white;font-size:17px;"> 
+  <p> 그린블라트가 강조한 투자지표의 기준은 다음과 같습니다.</p>
+  <li> -시가총액 50,000,000달러 이상의 기업(우량자산의 효과)</li> 
+  <li> -유틸리티, 금융기업 제외 (배당수익률, 저 PER기업이 아닌 꾸준한 이익성장을 보여주는 기업선호) </li> 
+  <li> -ADR (미국상장의 해외기업 제외, 미국 본토기업 선호)</li> 
+  <li> -자본수익률(ROIC): 영업활동에 사용되는 고정자산, 회사의 단기유동성(매출채권,현금) 대비 얼마나 많은 실적을
+    달성하였는지 백분율로 측정합니다.  
+  </li> 
+  <li> -이익수익률(Earnings Yield): EV(기업가치) 대비 얼마나 많은 EBIT(순이익)을 달성하였는지 백분율로 측정합니다. </li>
+  </ul>
+  <br> 
+</div>
+
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+  <ul style="color:white;font-size:17px;">  
+      <p> Greenblatt가 강조한 지표의 활용방안은 다음과 같습니다.</p>
+      <li> 1. 20-30위권 회사를 2-3종목씩 달마다 사모아 1년에 걸쳐서 매수한다. </li> 
+      <li> 2. 일년마다 포트폴리오를 리발란싱하고 1년이 지난 시점에 Loser들을 매도한다. </li> 
+      <li> 3. 위 전략을 5-10년에 걸쳐 반복한다 </li> 
+  </ul> 
+  <br> 
+</div>
+
+<label for="basic-url" class="form-label" style="color:white;font-size:17px;">QuantVis 분석요청</label>
+<form id= "jgform" method="POST" action="strategy_2_result"> 
+  <input type="submit" class="form-control" id="execute" name="execute" value="분석결과확인">
+</form> 
+<br>
+{% if execute %}
+<p style="color:white;font-size:17px;"><b>*참고: 가장 최근 분기실적을 바탕으로 업데이트됩니다. </h4></p>
+{% endif %}
+
+{% if execute %}
+<p style="color:white;font-size:17px;"><h4><b>이익수익률 우선순위 </h4></p>
+{% for table in jg_result_ey_tables %}
+{{ table|safe }}
+{% endfor %}
+{% endif %}
+<br> 
+
+{% if execute %}
+<p style="color:white;font-size:17px;"><h4><b>자본수익률 우선순위</h4></p>
+{% for table in jg_result_ey_tables %}
+{{ table|safe }}
+{% endfor %}
+{% endif %}
+
+</body> 
+
+
+{% endblock %}
