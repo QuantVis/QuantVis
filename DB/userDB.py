@@ -7,7 +7,7 @@ class User():
                 'host':'127.0.0.1',
                 'user':'quantvis',
                 'password':'quantvis',
-                'database':'quantvis',
+                'database':'quantvis_portfolio',
                 'port':3306,
                 'charset':'utf8',
                 'use_unicode':True
@@ -24,7 +24,7 @@ class User():
                 cursor.execute(sql)
                 res = cursor.fetchone()
                 if not res : return None                
-                user = {'id' : res[1], 'email' : res[2], 'password' : res[3], 'nick' : res[4], 'method' : res[5], 'my_stock' : res[6]}
+                user = {'id' : res[1], 'email' : res[2], 'password' : res[3], 'nick' : res[4], 'method' : res[5]}
                 return user
 
         except Exception as e:
