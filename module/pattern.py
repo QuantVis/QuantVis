@@ -18,7 +18,6 @@ matplotlib.use('Agg')
 
 pat = Blueprint('pattern', __name__, url_prefix='/pattern')
 
-@login_required
 @pat.route('/', methods=['GET', 'POST'])
 def index():
     if not session:
