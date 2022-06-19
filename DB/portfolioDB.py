@@ -1,9 +1,4 @@
-import imp
-from unittest import result
 import pymysql
-from flask_login import UserMixin
-import urllib
-from urllib.request import urlopen
 
 class Portfolio():  
     # config         
@@ -53,12 +48,11 @@ class Portfolio():
             conn.close()
     
     # 포트폴리오 이름 가져오기
-    def select_port_list(self):  # email 추가해야함!
-        #print(f"select:{email}")
+    def select_port_list(self,email): 
         try:
             conn = pymysql.connect(**self.config)
             cursor = conn.cursor()
-            sql = f"SELECT DISTINCT pfname FROM portfolio" # WHERE email='{email}'
+            sql = f"SELECT DISTINCT pfname FROM portfolio WHERE email='{email}'" 
             cursor.execute(sql)                
             res = cursor.fetchall()
             result = []
@@ -74,13 +68,13 @@ class Portfolio():
        
     # 포트폴리오 삭제        
     def delete_port(self, pfname):
-        print(f'select:{pfname}')
         try:
             conn = pymysql.connect(**self.config)
             cursor = conn.cursor()
             sql = f"DELETE FROM portfolio WHERE pfname='{pfname}'"
-            res = cursor.execute(sql)                
-            if res == 1: conn.commit()
+            res= cursor.execute(sql)
+            conn.commit()
+            print('res : ',res)            
             return res
         except Exception as e:
             print("DB연동 에러 : ", e)
