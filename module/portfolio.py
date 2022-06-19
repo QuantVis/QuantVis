@@ -11,7 +11,7 @@ from pandas_datareader import data as pdr
 import pandas as pd
 import io
 import matplotlib.ticker as ticker
-import mplfinance as mplfinance
+import mpl_finance as mplfinance
 from DB.portfolioDB import Portfolio
 from DB.quantvis import Quantvis
 import re,time
