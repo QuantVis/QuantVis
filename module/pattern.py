@@ -9,7 +9,6 @@ import matplotlib
 import matplotlib.pyplot as plt
 import matplotlib.gridspec as gridspec
 import mpl_finance as mplfinance
-from django.contrib.auth.decorators import login_required
 #from mpl_finance import candlestick_ohlc
 import numpy as np
 import FinanceDataReader as fdr
