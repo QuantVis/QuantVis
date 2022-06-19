@@ -34,11 +34,11 @@
               <td style="text-align:center;"><a href="/chart/search?stockName={{res[re][3].upper()}}">{{res[re][3].upper()}}</a></td>
               <td style="text-align:center;">{{res[re][4]}}</td>
               <td style="text-align:center;" class="stock">{{res[re][5]}}</td>
-              <td class="text-danger" style="text-align:right;">{{res[re][6]}}</td>
-              <td style="text-align:center;" class="{% if (change[re] | string)[0] == '-'%} text-danger {% else %} text-primary {% endif %}">{{change[re]}}</td>
+              <td class="text-danger" style="text-align:right;">{{'{:,}'.format(res[re][6]|float)}}</td>
+              <td style="text-align:center;" class="{% if (change[re] | string)[0] == '-'%} text-primary {% else %} text-danger {% endif %}">{{change[re]}}</td>
             </tr>
             <tr>
-              <td colspan="7"><h6>최근 30일 기준 차트(OHLC,DD,MDD)</h6><img src="{{url_for('static', filename='img/chart_'+((re+1)|string)+'.png')}}" width="800px" height="200px"/></td>
+              <td colspan="7"><h6>최근 30일 기준 차트(OHLC,DD,MDD)</h6><img src="{{url_for('static', filename='img/chart_'+((re+1)|string)+'.png')}}" width="800px" height="300px"/></td>
             </tr>
             {% endfor %}
           </tbody>
@@ -59,7 +59,7 @@
                 </select> 
               </td>
               <td style="font-weight: bold; font-size:small;"><span id="total_price">{{K_total_price_fi}}(원)</span></td>
-              <td colspan="2" style="text-align:right; font-weight: bold;" class={% if (K_total_change_price_fi | string)[0] == '-'%} text-danger {% else %} text-primary {% endif %}><span id="total_chg_price">{{K_total_change_price_fi}}(원)</span></td>
+              <td colspan="2" style="text-align:right; font-weight: bold;" class={% if (K_total_change_price_fi | string)[0] == '-'%} text-primary {% else %} text-danger {% endif %}><span id="total_chg_price">{{K_total_change_price_fi}}(원)</span></td>
             </tr>
           </tfoot>
         </table>
