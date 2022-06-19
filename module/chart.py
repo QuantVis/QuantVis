@@ -19,6 +19,8 @@ def getChart() :
 @chart.route('/search', methods=(['GET']))
 def search():
     search = request.args.get('stockName')
+    if search == "":
+        return render_template('charterror.html')
     cls1 = getName(search)
     stock_code = cls1.GetStockName()
     try:
