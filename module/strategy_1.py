@@ -33,12 +33,17 @@ def strategy_1_result():
     codeli= request.form.get('codelist') #html -> 리스트객체로 receive   
     codelis= codeli.replace(" ","") #리스트의 공백제거 
     codelist= codelis.split(',')
+    code_list = []
+    for code in codelist:
+        if code[0] == '0' or code[0] == '1' or code[0] == '2' or code[0] == '3' or code[0] == '4':
+            code = 'k' + code
+        code_list.append(code)
     startdate= request.form.get('startdate') 
     enddate= request.form.get('enddate')  
     print(codelist)
     df= pd.DataFrame() 
     strategydb = strategy() 
-    for code in codelist:
+    for code in code_list:
 
         stock_code = code.replace("-","_")
         df[stock_code]= strategydb.getUSstock_close(code,startdate,enddate)

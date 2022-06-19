@@ -9,16 +9,22 @@ import matplotlib
 import matplotlib.pyplot as plt
 import matplotlib.gridspec as gridspec
 import mpl_finance as mplfinance
+from django.contrib.auth.decorators import login_required
 #from mpl_finance import candlestick_ohlc
 import numpy as np
 import FinanceDataReader as fdr
+
 
 matplotlib.use('Agg')
 
 pat = Blueprint('pattern', __name__, url_prefix='/pattern')
 
+@login_required
 @pat.route('/', methods=['GET', 'POST'])
 def index():
+    if not session:
+        flash('로그인 후 이용해 주세요.')
+        return redirect("/account/")
     if request.method == 'GET':
         return render_template('pattern.html')
     else:
@@ -39,11 +45,9 @@ def plot_png():
     code  = request.args.get('code', None)
     startdate  = request.args.get('startdate', None)
     enddate  = request.args.get('enddate', None)
-    print(startdate)
     p = pt.PatternFinder()
     p.set_stock(code)
     result = p.search(startdate, enddate)
-    print(result)
     if len(result) > 0:
         fig = p.plot_pattern(list(result.keys())[0])
         output = io.BytesIO()

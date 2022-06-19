@@ -16,11 +16,11 @@ class strategyyy():
         try:
             conn = pymysql.connect(**self.config)
             cursor = conn.cursor()
-            sql1 = f"select ticker, sector, quarterdate, concat(quarterepsgrowth,'%') as a, yeardate, concat(threeyearearningsgrowth,'%') as b, concat(threeyearroe,'%') as c, concat(oneyearprofit,'%') as d, concat(oneyearsnpprofit,'%') from william_result_roe_20220616"
-            sql2= f"select ticker, sector, quarterdate, concat(quarterepsgrowth,'%') as a, yeardate, concat(threeyearearningsgrowth,'%') as b, concat(threeyearroe,'%') as c, concat(oneyearprofit,'%') as d, concat(oneyearsnpprofit,'%') from william_result_roe_20220616 order by a desc limit 5"
-            sql3= f"select ticker, sector, quarterdate, concat(quarterepsgrowth,'%') as a, yeardate, concat(threeyearearningsgrowth,'%') as b, concat(threeyearroe,'%') as c, concat(oneyearprofit,'%') as d, concat(oneyearsnpprofit,'%') from william_result_roe_20220616 order by b desc limit 5"
-            sql4= f"select ticker, sector, quarterdate, concat(quarterepsgrowth,'%') as a, yeardate, concat(threeyearearningsgrowth,'%') as b, concat(threeyearroe,'%') as c, concat(oneyearprofit,'%') as d, concat(oneyearsnpprofit,'%') from william_result_roe_20220616 order by c desc limit 5"
-            sql5= f"select ticker, sector, quarterdate, concat(quarterepsgrowth,'%') as a, yeardate, concat(threeyearearningsgrowth,'%') as b, concat(threeyearroe,'%') as c, concat(oneyearprofit,'%') as d, concat(oneyearsnpprofit,'%') from william_result_roe_20220616 order by d desc limit 5"
+            sql1 = f"select ticker, sector, quarterdate, concat(quarterepsgrowth,'%') as a, yeardate, concat(threeyearearningsgrowth,'%') as b, concat(threeyearroe,'%') as c, concat(oneyearprofit,'%') as d, concat(oneyearsnpprofit,'%') from william_result_roe_20220619"
+            sql2= f"select ticker, sector, quarterdate, concat(quarterepsgrowth,'%') as a, yeardate, concat(threeyearearningsgrowth,'%') as b, concat(threeyearroe,'%') as c, concat(oneyearprofit,'%') as d, concat(oneyearsnpprofit,'%') from william_result_roe_20220619 order by a desc limit 5"
+            sql3= f"select ticker, sector, quarterdate, concat(quarterepsgrowth,'%') as a, yeardate, concat(threeyearearningsgrowth,'%') as b, concat(threeyearroe,'%') as c, concat(oneyearprofit,'%') as d, concat(oneyearsnpprofit,'%') from william_result_roe_20220619 order by b desc limit 5"
+            sql4= f"select ticker, sector, quarterdate, concat(quarterepsgrowth,'%') as a, yeardate, concat(threeyearearningsgrowth,'%') as b, concat(threeyearroe,'%') as c, concat(oneyearprofit,'%') as d, concat(oneyearsnpprofit,'%') from william_result_roe_20220619 order by c desc limit 5"
+            sql5= f"select ticker, sector, quarterdate, concat(quarterepsgrowth,'%') as a, yeardate, concat(threeyearearningsgrowth,'%') as b, concat(threeyearroe,'%') as c, concat(oneyearprofit,'%') as d, concat(oneyearsnpprofit,'%') from william_result_roe_20220619 order by d desc limit 5"
             cursor.execute(sql1)
             rows1 = cursor.fetchall()
             cursor.execute(sql2)

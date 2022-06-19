@@ -23,6 +23,9 @@ anal = Blueprint('analysis', __name__, url_prefix='/analysis')
 
 @anal.route('/', methods = ['GET', 'POST'])
 def index():
+    if not session:
+        flash('로그인 후 이용해 주세요.')
+        return redirect("/account/")
     if request.method == 'GET':
         return render_template('analysis.html')
     else:
