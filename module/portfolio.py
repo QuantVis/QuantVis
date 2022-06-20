@@ -283,8 +283,8 @@ def portfolio_result() :
                 K_total_change_price += float(K_stock['price'][i])*float(K_stock['stocks'][i])*float(K_stock['change'][i])
             elif K_stock['status'][i] == '매도':
                 K_total_change_price -= float(K_stock['price'][i])*float(K_stock['stocks'][i])*float(K_stock['change'][i])
-        K_total_change_price_fi = format(round(K_total_change_price + round(F_total_change_price*exchng,2)),',')
-        F_total_change_price_fi = format(round(F_total_change_price + round(K_total_change_price/exchng,2)),',')
+        K_total_change_price_fi = format(round(K_total_change_price - round(F_total_change_price*exchng,2)),',')
+        F_total_change_price_fi = format(round(F_total_change_price - round(K_total_change_price/exchng,2)),',')
 
         return render_template('portfolio_result.html',
                            res=res,
