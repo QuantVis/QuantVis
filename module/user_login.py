@@ -268,3 +268,10 @@ def kakao_callback():
 def logout():
     session.clear()
     return redirect(url_for('user_login.login'))
+
+@user_login.errorhandler(403)
+@user_login.errorhandler(404)
+@user_login.errorhandler(410)
+@user_login.errorhandler(500)
+def page_not_found(e):
+    return render_template('error.html')
