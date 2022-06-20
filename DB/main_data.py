@@ -15,21 +15,28 @@ def get_five():
     now = {}
 
     snp = yf.download("ES=F", start = before)
+    time.sleep(1)
     five['snp'] = {'close': [round(i,2) for i in snp['Close']]}
+   
     
     dow = yf.download("YM=F", start = before)
+    time.sleep(1)
     five['dow'] = {'close': [round(i,2) for i in dow['Close']]}
     
     nasdaq = yf.download("NQ=F", start = before)
+    time.sleep(1)
     five['nasdaq'] = {'close': [round(i,2) for i in nasdaq['Close']]}
     
     kospi = yf.download("^KS11", start = before)
+    time.sleep(1)
     five['kospi'] = {'close': [round(i,2) for i in kospi['Close']]}
     
     kosdaq = yf.download("^KQ11", start = before)
+    time.sleep(1)
     five['kosdaq'] = {'close': [round(i,2) for i in kosdaq['Close']]} 
     
-    krw_x = yf.download("KRW=X", start=before)  
+    krw_x = yf.download("KRW=X", start=before)
+    time.sleep(1)
     five['krwx'] = {'close': [round(i,2) for i in krw_x['Close']]} 
 
     for code in ['snp', 'dow', 'nasdaq', 'kospi', 'kosdaq', 'krwx'] :
@@ -38,6 +45,8 @@ def get_five():
         percent = (differ / five[code]['close'][-2]) * 100
         if differ < 0 : flag = False
         now[code] = [ flag, round(five[code]['close'][-1],2), round(differ,2), round(percent,2) ]
+    
+
     
     return five, now
 
