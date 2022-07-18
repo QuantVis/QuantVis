@@ -1,4 +1,4 @@
-# QuantVis Project Summary
+# QuantVis_Project Summary
 ![슬라이드1](https://user-images.githubusercontent.com/95726798/179539924-751f7f15-6a21-4de0-948e-4eac1dc0e8c0.JPG)
 ![슬라이드2](https://user-images.githubusercontent.com/95726798/179539930-7886b8c7-ee97-42ea-9aed-94dbfe5948e2.JPG)
 ![슬라이드3](https://user-images.githubusercontent.com/95726798/179539937-9d0cbbd6-b0c3-4a74-80f6-037168161424.JPG)
